@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    driver-class-name: ${grant.datasource.driver-class-name}
+    url: jdbc:mysql://${grant.datasource.host}:${grant.datasource.port}/${grant.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${grant.datasource.username}
+    password: ${grant.datasource.password}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.collegegrant.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.collegegrant.mapper: debug
+#这次没有使用
+# jwt配置
+jwt:
+  # 秘钥：至少32位字符，自己随便写一串，不要泄露
+  admin-secret-key: collegegrant2026secretkey12345678
+  # 有效期，单位毫秒 86400000 = 24小时
+  admin-ttl: 86400000
+
+
+

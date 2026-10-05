@@ -22,10 +22,10 @@ public class JwtInterceptor implements HandlerInterceptor {
         //解析token
         try {
             Claims claims = JwtUtil.parseToken(token);
-            // 解析成功，把用户信息存到request里，后面Controller可以用
-            request.setAttribute("userId", claims.getId());
-            request.setAttribute("username", claims.getSubject());
-            request.setAttribute("role", claims.get("role"));
+            // 解析成功，把用户信息存到ThreadLocal，后面Controller/Service直接取
+            UserContext.setUserId(Long.valueOf(claims.getId()));// 用户ID，admin默认0
+            UserContext.setUsername(claims.getSubject());  // 用户名学号
+            UserContext.setRole((Integer) claims.get("role"));
             return true;  // true=放行
         } catch (Exception e) {
             // 解析失败，token过期或伪造
@@ -34,5 +34,11 @@ public class JwtInterceptor implements HandlerInterceptor {
             return false;  // 拦截
         }
 
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        // 请求结束后清空ThreadLocal，防止内存泄漏
+        UserContext.clear();
     }
 }

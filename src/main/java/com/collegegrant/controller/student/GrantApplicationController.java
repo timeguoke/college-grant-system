@@ -2,7 +2,7 @@ package com.collegegrant.controller.student;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.common.*;
-import com.collegegrant.service.student.GrantApplicationService;
+import com.collegegrant.service.GrantApplicationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("studentGrantApplicationController")
 @RequestMapping("/api/student/application")
-@Api(tags = "申请表相关接口")
+@Api(tags = "学生端:申请表相关接口")
 @Slf4j
 public class GrantApplicationController {
 
@@ -33,7 +33,9 @@ public class GrantApplicationController {
 
     @GetMapping("/my-list")
     @ApiOperation("我的申请列表")
-    public PageResult<ApplicationVO> myApplicationList(int page, int size) {
+    public PageResult<ApplicationVO> myApplicationList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {//参数设置上默认值
         log.info("我的申请列表 ");
         Page<ApplicationVO> result = grantApplicationService.myApplicationList(page, size);
         long total = result.getTotal();
@@ -46,7 +48,10 @@ public class GrantApplicationController {
     @ApiOperation("我的申请详情")
     public Result getApplicationDetail(@PathVariable Long id) {
         log.info("我的申请详情:{}", id);
-        ApplicationVO applicationVO = grantApplicationService.getApplicationDetail(id);
+        //取出学生学号, 即存在令牌里的账号名称
+        String studentNO = UserContext.getUsername();
+
+        ApplicationVO applicationVO = grantApplicationService.getApplicationDetail(id,studentNO);
         return Result.success(applicationVO);
     }
 

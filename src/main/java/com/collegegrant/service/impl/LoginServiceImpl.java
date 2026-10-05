@@ -1,4 +1,4 @@
-package com.collegegrant.service.login.impl;
+package com.collegegrant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.collegegrant.common.LoginDTO;
@@ -9,13 +9,11 @@ import com.collegegrant.entity.Teacher;
 import com.collegegrant.mapper.StudentMapper;
 import com.collegegrant.mapper.SysUserMapper;
 import com.collegegrant.mapper.TeacherMapper;
-import com.collegegrant.service.login.LoginService;
+import com.collegegrant.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
-
-import java.nio.charset.StandardCharsets;
 
 @Service
 public class LoginServiceImpl implements LoginService {

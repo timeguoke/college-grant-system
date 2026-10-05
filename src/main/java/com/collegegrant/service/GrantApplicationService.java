@@ -1,12 +1,8 @@
-package com.collegegrant.service.student;
+package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.common.ApplicationDTO;
 import com.collegegrant.common.ApplicationVO;
-import com.collegegrant.entity.Student;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public interface GrantApplicationService {
     /**
@@ -26,9 +22,30 @@ public interface GrantApplicationService {
 
     /**
      *
-     * 我的申请详情
+     * 申请详情
      * @param id
+     * @param studentNO
      * @return
      */
-    ApplicationVO getApplicationDetail(Long id);
+    ApplicationVO getApplicationDetail(Long id,String studentNO);
+
+    /**
+     * 申请列表
+     * @param page
+     * @param size
+     * @param keyword
+     * @param status
+     * @param typeId
+     * @return
+     */
+    Page<ApplicationVO> list(int page, int size, String keyword, Integer status, Long typeId);
+
+    /**
+     * 通过申请 /驳回申请
+     * @param id
+     * @param reviewComment
+     * @param status
+     */
+    void updateStatus(Long id, String reviewComment,Integer status);
+
 }

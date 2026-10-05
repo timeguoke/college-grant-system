@@ -1,19 +1,18 @@
-package com.collegegrant.service.student.impl;
+package com.collegegrant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.common.ApplicationDTO;
 import com.collegegrant.common.ApplicationVO;
 import com.collegegrant.common.UserContext;
 import com.collegegrant.entity.GrantApplication;
 import com.collegegrant.mapper.GrantApplicationMapper;
-import com.collegegrant.mapper.GrantTypeMapper;
-import com.collegegrant.mapper.StudentMapper;
-import com.collegegrant.mapper.SysUserMapper;
-import com.collegegrant.service.student.GrantApplicationService;
+import com.collegegrant.service.GrantApplicationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
@@ -68,10 +67,10 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
     @Override
     public Page<ApplicationVO> myApplicationList(int page, int size) {
         //先取出登录者的学号
-        Long student = UserContext.getUserId();
+        Long studentId = UserContext.getUserId();
         Page<ApplicationVO> pageParam = new Page<>(page, size);
 
-        Page<ApplicationVO> voPage = grantApplicationMapper.selectMyApplicationPage(pageParam, student);
+        Page<ApplicationVO> voPage = grantApplicationMapper.selectApplicationPage(pageParam, studentId, null, null, null);
         //填充状态码文字
         for (ApplicationVO VO : voPage.getRecords()) {
             VO.setStatusText(getStatusText(VO.getStatus()));
@@ -106,14 +105,14 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
     }
 
     /**
-     *
-     * 我的申请详情
-     *
+     * 申请详情
      * @param id
+     * @param studentNO
      * @return
      */
+
     @Override
-    public ApplicationVO getApplicationDetail(Long id) {
+    public ApplicationVO getApplicationDetail(Long id, String studentNO) {
         ApplicationVO applicationVO = grantApplicationMapper.selectDetailById(id);
         //判断申请是否存在
         if (applicationVO == null) {
@@ -121,12 +120,80 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
         }
         //判断是否是该账号的申请
         //账号学号                 申请人的学号
-        if (!UserContext.getUserId().equals(applicationVO.getStudentId())) {
-            throw new RuntimeException("无权查看他人申请");
+        // 如果传了 studentNO（学生端调用），校验是否是本人的申请
+        if (studentNO != null) {
+            if (!studentNO.equals(applicationVO.getStudentNo())) {
+                throw new RuntimeException("无权查看他人申请");
+            }
         }
 
         //设置状态码文字
         applicationVO.setStatusText(getStatusText(applicationVO.getStatus()));
         return applicationVO;
+    }
+
+
+    /**
+     * 申请列表
+     *
+     * @param page
+     * @param size
+     * @param keyword
+     * @param status
+     * @param typeId
+     * @return
+     */
+    @Override
+    public Page<ApplicationVO> list(int page, int size, String keyword, Integer status, Long typeId) {
+
+        Page<ApplicationVO> pageParam = new Page<>(page, size);
+
+        Page<ApplicationVO> voPage = grantApplicationMapper
+                .selectApplicationPage(pageParam, null, status, typeId, keyword);
+        //填充状态码文字
+        for (ApplicationVO VO : voPage.getRecords()) {
+            VO.setStatusText(getStatusText(VO.getStatus()));
+        }
+
+        return voPage;
+    }
+
+
+    /**
+     * 通过申请 /驳回申请
+     *
+     * @param id
+     * @param reviewComment
+     */
+    @Override
+    @Transactional
+    public void updateStatus(Long id, String reviewComment, Integer status) {
+        //只能对待申请的进行操作
+        GrantApplication grantApplication = grantApplicationMapper.selectById(id);
+        //判断申请是否存在
+        if (grantApplication == null) {
+            throw new RuntimeException("申请不存在");
+        }
+        //先判断状态
+        if (grantApplication.getStatus() != 0) {
+            throw new RuntimeException("申请状态错误");
+        }
+
+
+        //进行状态修改
+        LambdaUpdateWrapper<GrantApplication> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(GrantApplication::getReviewComment, reviewComment);
+        updateWrapper.set(GrantApplication::getReviewerId, UserContext.getUserId());//审核人
+        updateWrapper.set(GrantApplication::getReviewTime, LocalDateTime.now());//审核时间
+        updateWrapper.set(GrantApplication::getStatus, status);//进行状态修改,通过为1,驳回为2
+        updateWrapper.eq(GrantApplication::getId, id);
+        updateWrapper.eq(GrantApplication::getStatus, 0); // 只更新状态为0的
+
+        int rows = grantApplicationMapper.update(null, updateWrapper);
+        //防止并发问题
+        if (rows == 0) {
+            throw new RuntimeException("申请状态已变更，请刷新后重试");
+        }
+
     }
 }

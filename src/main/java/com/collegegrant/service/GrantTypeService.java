@@ -1,4 +1,4 @@
-package com.collegegrant.service.admin;
+package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.entity.GrantType;

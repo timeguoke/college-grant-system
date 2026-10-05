@@ -1,4 +1,4 @@
-package com.collegegrant.service.login;
+package com.collegegrant.service;
 
 import com.collegegrant.common.LoginDTO;
 import com.collegegrant.common.LoginVO;

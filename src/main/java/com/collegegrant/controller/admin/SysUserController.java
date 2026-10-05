@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.common.PageResult;
 import com.collegegrant.common.Result;
 import com.collegegrant.entity.SysUser;
-import com.collegegrant.service.admin.SysUserService;
+import com.collegegrant.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

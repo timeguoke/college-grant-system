@@ -1,4 +1,4 @@
-package com.collegegrant.service.admin.impl;
+package com.collegegrant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -7,7 +7,7 @@ import com.collegegrant.entity.Student;
 import com.collegegrant.entity.SysUser;
 import com.collegegrant.mapper.StudentMapper;
 import com.collegegrant.mapper.SysUserMapper;
-import com.collegegrant.service.admin.StudentService;
+import com.collegegrant.service.StudentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

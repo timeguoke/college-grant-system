@@ -4,7 +4,7 @@ import com.collegegrant.common.JwtUtil;
 import com.collegegrant.common.LoginDTO;
 import com.collegegrant.common.LoginVO;
 import com.collegegrant.common.Result;
-import com.collegegrant.service.login.LoginService;
+import com.collegegrant.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

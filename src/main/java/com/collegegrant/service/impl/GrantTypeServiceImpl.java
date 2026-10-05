@@ -1,10 +1,10 @@
-package com.collegegrant.service.admin.impl;
+package com.collegegrant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.entity.GrantType;
 import com.collegegrant.mapper.GrantTypeMapper;
-import com.collegegrant.service.admin.GrantTypeService;
+import com.collegegrant.service.GrantTypeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

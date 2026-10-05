@@ -1,10 +1,10 @@
-package com.collegegrant.service.admin.impl;
+package com.collegegrant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.entity.SysUser;
 import com.collegegrant.mapper.SysUserMapper;
-import com.collegegrant.service.admin.SysUserService;
+import com.collegegrant.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

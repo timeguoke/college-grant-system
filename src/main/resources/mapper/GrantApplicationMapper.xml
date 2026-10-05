@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress XmlUnresolvedReference -->
 <mapper namespace="com.collegegrant.mapper.GrantApplicationMapper">
 
     <!-- 申请VO结果映射：SQL列名 → Java属性名 -->
@@ -20,8 +21,50 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
-
-    <!-- 分页查询我的申请列表 -->
+    <!-- 分页查询申请列表（通用：学生/教师/管理员都能用） -->
+    <select id="selectApplicationPage" resultMap="applicationVOMap">
+        SELECT
+        a.id,
+        a.type_id,
+        t.type_name,
+        a.apply_reason,
+        a.family_situation,
+        a.status,
+        a.reviewer_id,
+        ru.name AS reviewer_name,
+        a.review_comment,
+        a.review_time,
+        a.student_id,
+        s.student_no,
+        s.name AS student_name,
+        a.create_time,
+        a.update_time
+        FROM grant_application a
+        LEFT JOIN grant_type t ON a.type_id = t.id
+        LEFT JOIN sys_user ru ON a.reviewer_id = ru.id AND ru.role = 1
+        LEFT JOIN student s ON a.student_id = s.id
+        <where>
+            <!-- 学生端：只看自己的申请 -->
+            <if test="studentId != null">
+                AND a.student_id = #{studentId}
+            </if>
+            <!-- 状态筛选 -->
+            <if test="status != null">
+                AND a.status = #{status}
+            </if>
+            <!-- 助学金类型筛选 -->
+            <if test="typeId != null">
+                AND a.type_id = #{typeId}
+            </if>
+            <!-- 关键词搜索：学号或姓名模糊匹配 -->
+            <if test="keyword != null and keyword != ''">
+                AND (s.student_no LIKE CONCAT('%', #{keyword}, '%')
+                OR s.name LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY a.create_time DESC
+    </select>
+   <!-- &lt;!&ndash; 分页查询我的申请列表 &ndash;&gt;
     <select id="selectMyApplicationPage" resultMap="applicationVOMap">
         SELECT
             a.id,
@@ -45,7 +88,7 @@
                  LEFT JOIN student s ON a.student_id = s.id
         WHERE a.student_id = #{studentId}
         ORDER BY a.create_time DESC
-    </select>
+    </select>-->
 
     <!-- 根据ID查询申请详情 -->
     <select id="selectDetailById" resultMap="applicationVOMap">

@@ -37,10 +37,10 @@ public interface StudentService {
      * @param size
      * @param keyword
      * @param college
-     * @param isPoor
+     * @param specialType  特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾
      * @return
      */
-    Page<Student> list(int page, int size, String keyword, String college, Integer isPoor);
+    Page<Student> list(int page, int size, String keyword, String college, Integer specialType);
 
     /**
      * 查询学生总数

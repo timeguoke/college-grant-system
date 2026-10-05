@@ -28,21 +28,30 @@ public class ScoreRecord {
     /** 申请ID */
     private Long applicationId;
 
-    /** 经济情况分（0-100） */
+    /** 新方案:家庭经济情况分（0-100），收入越低分越高 */
     private BigDecimal economicScore;
 
-    /** 学习成绩分（0-100） */
-    private BigDecimal academicScore;
+    /** 新方案:家庭负担情况分（0-100），负担越重分越高 */
+    private BigDecimal familyBurdenScore;
 
-    /** 家庭困难分（0-100） */
-    private BigDecimal familyScore;
+    /** 新方案:特殊困难程度分（0-100），困难程度越高分越高 */
+    private BigDecimal specialHardshipScore;
 
-    /** 奖惩情况分（0-100） */
-    private BigDecimal rewardScore;
+    /** 新方案:突发困难情况分（0-100），受灾/重大疾病等 */
+    private BigDecimal disasterScore;
 
     /** 评分教师ID */
     private Long scorerId;
 
+    /** 新方案:评分评语 */
+    private String scoreComment;
+
     /** 评分时间 */
     private LocalDateTime scoreTime;
+
+    /** 创建时间 */
+    private LocalDateTime createTime;
+
+    /** 更新时间 */
+    private LocalDateTime updateTime;
 }

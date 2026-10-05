@@ -166,11 +166,11 @@ public class StudentServiceImpl implements StudentService {
      * @param size
      * @param keyword
      * @param college
-     * @param isPoor
+     * @param specialType  特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾
      * @return
      */
     @Override
-    public Page<Student> list(int page, int size, String keyword, String college, Integer isPoor) {
+    public Page<Student> list(int page, int size, String keyword, String college, Integer specialType) {
         //页码参数
         Page<Student> pageParam = new Page<>(page, size);
         LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<>();
@@ -184,9 +184,9 @@ public class StudentServiceImpl implements StudentService {
         if (college != null && !college.isEmpty()) {
             wrapper.eq(Student::getCollege, college);
         }
-        // isPoor不为空时，按建档立卡筛选
-        if (isPoor != null) {
-            wrapper.eq(Student::getIsPoor, isPoor);
+        // specialType不为空时，按特殊困难类型筛选
+        if (specialType != null) {
+            wrapper.eq(Student::getSpecialType, specialType);
         }
         //按照创建时间的降序进行排序
         wrapper.orderByDesc(Student::getCreateTime);

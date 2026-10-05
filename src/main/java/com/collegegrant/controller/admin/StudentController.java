@@ -31,10 +31,10 @@ public class StudentController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String college,
-            @RequestParam(required = false) Integer isPoor) {
+            @RequestParam(required = false) Integer specialType) {
 
-        log.info("学生分页,分页信息 page={},size={},keyword={},college={},isPoor={}", page, size, keyword, college, isPoor);
-        Page<Student> result = studentService.list(page, size, keyword, college, isPoor);
+        log.info("学生分页,分页信息 page={},size={},keyword={},college={},specialType={}", page, size, keyword, college, specialType);
+        Page<Student> result = studentService.list(page, size, keyword, college, specialType);
         //总记录数
         Long total = result.getTotal();
         //数据

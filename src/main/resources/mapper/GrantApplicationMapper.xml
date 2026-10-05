@@ -10,6 +10,8 @@
         <result property="typeName" column="type_name"/>
         <result property="applyReason" column="apply_reason"/>
         <result property="familySituation" column="family_situation"/>
+        <!-- 新方案:特殊困难证明材料路径 -->
+        <result property="specialProof" column="special_proof"/>
         <result property="status" column="status"/>
         <result property="reviewerId" column="reviewer_id"/>
         <result property="reviewerName" column="reviewer_name"/>
@@ -29,6 +31,8 @@
         t.type_name,
         a.apply_reason,
         a.family_situation,
+        <!-- 新方案:特殊困难证明材料路径 -->
+        a.special_proof,
         a.status,
         a.reviewer_id,
         ru.name AS reviewer_name,
@@ -40,9 +44,9 @@
         a.create_time,
         a.update_time
         FROM grant_application a
-        LEFT JOIN grant_type t ON a.type_id = t.id
-        LEFT JOIN sys_user ru ON a.reviewer_id = ru.id AND ru.role = 1
-        LEFT JOIN student s ON a.student_id = s.id
+             LEFT JOIN grant_type t ON a.type_id = t.id
+             LEFT JOIN sys_user ru ON a.reviewer_id = ru.id AND ru.role = 1
+             LEFT JOIN student s ON a.student_id = s.id
         <where>
             <!-- 学生端：只看自己的申请 -->
             <if test="studentId != null">
@@ -98,6 +102,8 @@
             t.type_name,
             a.apply_reason,
             a.family_situation,
+            <!-- 新方案:特殊困难证明材料路径 -->
+            a.special_proof,
             a.status,
             a.reviewer_id,
             ru.name AS reviewer_name,

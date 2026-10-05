@@ -40,8 +40,8 @@ public class Student {
     private Integer familyMembers;
     /** 人均年收入（元，自动计算） */
     private BigDecimal perCapitaIncome;
-    /** 是否建档立卡：0否，1是 */
-    private Integer isPoor;
+    /** 特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾 */
+    private Integer specialType;
     /** 创建时间 */
     private LocalDateTime createTime;
     /** 更新时间 */

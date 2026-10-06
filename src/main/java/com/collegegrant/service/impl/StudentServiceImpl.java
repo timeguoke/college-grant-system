@@ -32,6 +32,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void insert(Student student) {
+        // ===== 新增：参数非空校验 =====
+        if (student.getStudentNo() == null || student.getStudentNo().trim().isEmpty()) {
+            throw new RuntimeException("学号不能为空");
+        }
+        if (student.getName() == null || student.getName().trim().isEmpty()) {
+            throw new RuntimeException("姓名不能为空");
+        }
+        // ===== 新增结束 =====
+
         //先判断该学生是否已经存在
         String studentNo = student.getStudentNo();
         LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<>();

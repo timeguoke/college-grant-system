@@ -3,6 +3,97 @@
 <!--suppress XmlUnresolvedReference -->
 <mapper namespace="com.collegegrant.mapper.ScoreRecordMapper">
 
+    <!-- 评分记录结果映射 -->
+    <resultMap id="scoreRecordVOMap" type="com.collegegrant.common.ScoreRecordVO">
+        <id property="id" column="id"/>
+        <result property="applicationId" column="application_id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="studentNo" column="student_no"/>
+        <result property="studentName" column="student_name"/>
+        <result property="typeId" column="type_id"/>
+        <result property="typeName" column="type_name"/>
+        <result property="economicScore" column="economic_score"/>
+        <result property="familyBurdenScore" column="family_burden_score"/>
+        <result property="specialHardshipScore" column="special_hardship_score"/>
+        <result property="disasterScore" column="disaster_score"/>
+        <result property="scorerId" column="scorer_id"/>
+        <result property="scorerName" column="scorer_name"/>
+        <result property="scoreComment" column="score_comment"/>
+        <result property="scoreTime" column="score_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
 
+    <!-- 分页查询评分列表（通用：教师端/管理员端都能用） -->
+    <select id="selectScorePage" resultMap="scoreRecordVOMap">
+        SELECT
+            sr.id,
+            sr.application_id,
+            a.student_id,
+            s.student_no,
+            s.name AS student_name,
+            a.type_id,
+            t.type_name,
+            sr.economic_score,
+            sr.family_burden_score,
+            sr.special_hardship_score,
+            sr.disaster_score,
+            sr.scorer_id,
+            tu.name AS scorer_name,
+            sr.score_comment,
+            sr.score_time,
+            sr.create_time,
+            sr.update_time
+        FROM score_record sr
+                 LEFT JOIN grant_application a ON sr.application_id = a.id
+                 LEFT JOIN student s ON a.student_id = s.id
+                 LEFT JOIN grant_type t ON a.type_id = t.id
+                 LEFT JOIN sys_user tu ON sr.scorer_id = tu.user_id AND tu.role = 1
+        <where>
+            <!-- 关键词搜索：学号或学生姓名 -->
+            <if test="keyword != null and keyword != ''">
+                AND (s.student_no LIKE CONCAT('%', #{keyword}, '%')
+                     OR s.name LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <!-- 助学金类型筛选 -->
+            <if test="typeId != null">
+                AND a.type_id = #{typeId}
+            </if>
+            <!-- 评分教师筛选（教师端"我的评分"用，管理员端传null查全部） -->
+            <if test="scorerId != null">
+                AND sr.scorer_id = #{scorerId}
+            </if>
+        </where>
+        ORDER BY sr.score_time DESC
+    </select>
+
+    <!-- 根据申请ID查询评分详情 -->
+    <select id="selectByApplicationId" resultMap="scoreRecordVOMap">
+        SELECT
+            sr.id,
+            sr.application_id,
+            a.student_id,
+            s.student_no,
+            s.name AS student_name,
+            a.type_id,
+            t.type_name,
+            sr.economic_score,
+            sr.family_burden_score,
+            sr.special_hardship_score,
+            sr.disaster_score,
+            sr.scorer_id,
+            tu.name AS scorer_name,
+            sr.score_comment,
+            sr.score_time,
+            sr.create_time,
+            sr.update_time
+        FROM score_record sr
+                 LEFT JOIN grant_application a ON sr.application_id = a.id
+                 LEFT JOIN student s ON a.student_id = s.id
+                 LEFT JOIN grant_type t ON a.type_id = t.id
+                 LEFT JOIN sys_user tu ON sr.scorer_id = tu.user_id AND tu.role = 1
+        WHERE sr.application_id = #{applicationId}
+        LIMIT 1
+    </select>
 
 </mapper>

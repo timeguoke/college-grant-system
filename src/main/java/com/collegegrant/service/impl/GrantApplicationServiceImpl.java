@@ -32,6 +32,15 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
      */
     @Override
     public void submitApplication(ApplicationDTO applicationDTO, Long studentId) {
+        // ===== 新增：参数非空校验 =====
+        if (applicationDTO.getTypeId() == null) {
+            throw new RuntimeException("助学金类型不能为空");
+        }
+        if (applicationDTO.getApplyReason() == null || applicationDTO.getApplyReason().trim().isEmpty()) {
+            throw new RuntimeException("申请理由不能为空");
+        }
+        // ===== 新增结束 =====
+
         // 修改部分：重复申请校验
         // 校验：同一学生对同一助学金类型，是否已有待审核或通过状态的申请
         LambdaQueryWrapper<GrantApplication> wrapper = new LambdaQueryWrapper<>();
@@ -83,7 +92,7 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
     /**
      * 状态码转文字
      */
-    private String getStatusText(Integer status) {
+    private   String getStatusText(Integer status) {
         if (status == null) return "未知";
         switch (status) {
             case 0:

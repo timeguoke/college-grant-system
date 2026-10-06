@@ -41,4 +41,17 @@ public interface GrantApplicationMapper extends BaseMapper<GrantApplication> {
      * @return 申请VO
      */
     ApplicationVO selectDetailById(@Param("id") Long id);
+
+    /**
+     * 新方案:分页查询待评分申请列表（教师端用）
+     * 筛选条件：状态=通过 + 普通学生 + 尚未评分
+     *
+     * @param page      分页对象
+     * @param keyword   关键词（学号/姓名）
+     * @param typeId    助学金类型ID
+     * @return
+     */
+    Page<ApplicationVO> selectPendingScorePage(Page<ApplicationVO> page,
+                                                @Param("keyword") String keyword,
+                                                @Param("typeId") Long typeId);
 }

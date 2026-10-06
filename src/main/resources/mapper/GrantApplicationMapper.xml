@@ -45,7 +45,7 @@
         a.update_time
         FROM grant_application a
              LEFT JOIN grant_type t ON a.type_id = t.id
-             LEFT JOIN sys_user ru ON a.reviewer_id = ru.id AND ru.role = 1
+             LEFT JOIN sys_user ru ON a.reviewer_id = ru.user_id AND ru.role = 1
              LEFT JOIN student s ON a.student_id = s.id
         <where>
             <!-- 学生端：只看自己的申请 -->
@@ -116,9 +116,47 @@
             a.update_time
         FROM grant_application a
                  LEFT JOIN grant_type t ON a.type_id = t.id
-                 LEFT JOIN sys_user ru ON a.reviewer_id = ru.id AND ru.role = 1
+                 LEFT JOIN sys_user ru ON a.reviewer_id = ru.user_id AND ru.role = 1
                  LEFT JOIN student s ON a.student_id = s.id
         WHERE a.id = #{id}
+    </select>
+
+    <!-- 新方案:待评分申请列表（教师端用）
+         筛选条件：状态=通过 + 普通学生(special_type=0) + 还没有评分记录 -->
+    <select id="selectPendingScorePage" resultMap="applicationVOMap">
+        SELECT
+            a.id,
+            a.type_id,
+            t.type_name,
+            a.apply_reason,
+            a.family_situation,
+            a.special_proof,
+            a.status,
+            a.reviewer_id,
+            ru.name AS reviewer_name,
+            a.review_comment,
+            a.review_time,
+            a.student_id,
+            s.student_no,
+            s.name AS student_name,
+            a.create_time,
+            a.update_time
+        FROM grant_application a
+                 LEFT JOIN grant_type t ON a.type_id = t.id
+                 LEFT JOIN sys_user ru ON a.reviewer_id = ru.user_id AND ru.role = 1
+                 LEFT JOIN student s ON a.student_id = s.id
+                 LEFT JOIN score_record sr ON a.id = sr.application_id
+        WHERE a.status = 1            <!-- 状态：通过 -->
+          AND s.special_type = 0      <!-- 普通学生，特殊困难学生不用评分 -->
+          AND sr.id IS NULL           <!-- 还没有评分记录 -->
+            <if test="keyword != null and keyword != ''">
+                AND (s.student_no LIKE CONCAT('%', #{keyword}, '%')
+                     OR s.name LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="typeId != null">
+                AND a.type_id = #{typeId}
+            </if>
+        ORDER BY a.create_time DESC
     </select>
 
 </mapper>

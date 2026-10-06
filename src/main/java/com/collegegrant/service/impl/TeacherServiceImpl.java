@@ -31,6 +31,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional
     public void insert(Teacher teacher) {
+        // ===== 新增：参数非空校验 =====
+        if (teacher.getTeacherNo() == null || teacher.getTeacherNo().trim().isEmpty()) {
+            throw new RuntimeException("工号不能为空");
+        }
+        if (teacher.getName() == null || teacher.getName().trim().isEmpty()) {
+            throw new RuntimeException("姓名不能为空");
+        }
+        // ===== 新增结束 =====
+
         //先判断该教师是否已经存在
         String teacherNo = teacher.getTeacherNo();
         LambdaQueryWrapper<Teacher> wrapper = new LambdaQueryWrapper<>();

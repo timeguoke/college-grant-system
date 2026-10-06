@@ -26,6 +26,12 @@ public class GrantTypeServiceImpl implements GrantTypeService {
     @Override
     @Transactional
     public void insert(GrantType grantType) {
+        // ===== 新增：参数非空校验 =====
+        if (grantType.getTypeName() == null || grantType.getTypeName().trim().isEmpty()) {
+            throw new RuntimeException("助学金名称不能为空");
+        }
+        // ===== 新增结束 =====
+
         //先判断该助学金是否已经存在
         String grantTypeName = grantType.getTypeName();
         LambdaQueryWrapper<GrantType> wrapper = new LambdaQueryWrapper<>();

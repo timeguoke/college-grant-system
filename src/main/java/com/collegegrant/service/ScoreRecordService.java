@@ -29,7 +29,7 @@ public interface ScoreRecordService {
      * @param typeId
      * @return
      */
-    Page<ScoreRecordVO> list(int page, int size, String keyword, Long typeId);
+    Page<ScoreRecordVO> list(int page, int size, String keyword, Long typeId,Long scorerId);
 
     /**
      * 评分详情

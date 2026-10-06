@@ -188,11 +188,10 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
      * @return
      */
     @Override
-    public Page<ScoreRecordVO> list(int page, int size, String keyword, Long typeId) {
+    public Page<ScoreRecordVO> list(int page, int size, String keyword, Long typeId,Long scorerId) {
         //页码信息
         Page<ScoreRecordVO> pageParam = new Page<>();
-        //修改人的id
-        Long scorerId = UserContext.getUserId();
+
 
         Page<ScoreRecordVO> VOPage = scoreRecordMapper.selectScorePage(pageParam, keyword, typeId, scorerId);
         return VOPage;

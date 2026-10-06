@@ -2,9 +2,6 @@ package com.collegegrant.controller.teacher;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.common.*;
-import com.collegegrant.entity.GrantApplication;
-import com.collegegrant.entity.ScoreRecord;
-import com.collegegrant.entity.Student;
 import com.collegegrant.service.ScoreRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("teacherScoreRecordController")
 @RequestMapping("/api/teacher/score")
 @Api(tags = "评分相关接口")
 @Slf4j
@@ -40,14 +37,16 @@ public class ScoreRecordController {
     }
 
     @GetMapping("/my-list")
-    @ApiOperation("评分列表")
+    @ApiOperation("评分列表:教师端")
     public PageResult<ScoreRecordVO> list(@RequestParam(defaultValue = "1") int page,
                                           @RequestParam(defaultValue = "10") int size,
                                           @RequestParam(required = false) String keyword,
                                           @RequestParam(required = false) Long typeId) {
 
-        log.info("评分列表page={},size={},keyword={},typeId={}", page, size, keyword, typeId);
-        Page<ScoreRecordVO> result = scoreRecordService.list(page, size, keyword, typeId);
+        log.info("评分列表:教师端  page={},size={},keyword={},typeId={}", page, size, keyword, typeId);
+        //修改人的id
+        Long scorerId = UserContext.getUserId();
+        Page<ScoreRecordVO> result = scoreRecordService.list(page, size, keyword, typeId,scorerId);
         long total = result.getTotal();
         List<ScoreRecordVO> records = result.getRecords();
         return PageResult.success(total, records);

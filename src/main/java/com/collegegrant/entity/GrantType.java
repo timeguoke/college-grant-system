@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -25,14 +24,8 @@ public class GrantType {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 类型名称 */
+    /** 助学金名称 */
     private String typeName;
-
-    /** 等级：0特级，1一等，2二等，3三等 */
-    private Integer level;
-
-    /** 金额（元） */
-    private BigDecimal amount;
 
     /** 状态：0停用，1可申请 */
     private Integer status;

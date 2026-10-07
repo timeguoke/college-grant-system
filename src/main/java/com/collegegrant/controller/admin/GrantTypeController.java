@@ -1,6 +1,7 @@
 package com.collegegrant.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.collegegrant.common.GrantTypeWithLevelVO;
 import com.collegegrant.common.PageResult;
 import com.collegegrant.common.Result;
 import com.collegegrant.entity.GrantType;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@RestController
+@RestController("adminGrantTypeController")
 @RequestMapping("/api/admin/grant-type")
 @Slf4j
 @Api(tags = "助学金类型管理相关接口")
@@ -49,11 +50,13 @@ public class GrantTypeController {
     }
 
     @GetMapping("/available")
-    @ApiOperation("查询可申请的助学金列表")
-    public Result getGrantTypeDetail() {
-        log.info("查询可申请的助学金列表");
-        List<GrantType> grantTypes = grantTypeService.selectAvailableList();
-        return Result.success(grantTypes);
+    @ApiOperation("可申请助学金列表（带等级）")
+    public PageResult<GrantTypeWithLevelVO> availableList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        log.info("可申请助学金列表 page={},size={}", page, size);
+        Page<GrantTypeWithLevelVO> result = grantTypeService.selectAvailableList(page, size);
+        return PageResult.success(result.getTotal(), result.getRecords());
     }
 
     @PutMapping("/{id}/status")
@@ -78,16 +81,14 @@ public class GrantTypeController {
     }
 
 
-
-
     @DeleteMapping("/{id}")
     @ApiOperation("删除助学金")
     public Result deleteGrantType(@PathVariable Long id) {
         log.info("删除助学金 :id={} ", id);
         grantTypeService.deleteById(id);
+
         return Result.success();
     }
-
 
 
     @GetMapping("/count")
@@ -96,6 +97,15 @@ public class GrantTypeController {
         log.info("统计助学金总数");
         Long count = grantTypeService.countGrantType();
         return Result.success(count);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("助学金类型详情")
+    public Result GrantTypeDetail(@PathVariable Long id) {
+        log.info("助学金类型详情 :id={} ", id);
+        GrantType grantType = grantTypeService.GrantTypeDetail(id);
+        return Result.success(grantType);
+
     }
 
 }

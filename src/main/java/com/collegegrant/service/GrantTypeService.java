@@ -1,13 +1,11 @@
 package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.collegegrant.common.GrantTypeWithLevelVO;
 import com.collegegrant.entity.GrantType;
-
-import java.util.List;
 
 public interface GrantTypeService {
     /**
-     *
      * 新增助学金
      *
      * @param grantType
@@ -15,11 +13,13 @@ public interface GrantTypeService {
     void insert(GrantType grantType);
 
     /**
-     * 查询助学金详情
+     * 分页查询可申请的助学金（带等级列表）
      *
-     * @return
+     * @param page 页码
+     * @param size 每页条数
+     * @return 分页结果
      */
-    List<GrantType> selectAvailableList();
+    Page<GrantTypeWithLevelVO> selectAvailableList(int page, int size);
 
     /**
      * 修改助学金信息
@@ -51,4 +51,11 @@ public interface GrantTypeService {
      * @return
      */
     Long countGrantType();
+
+    /**
+     * 助学金详情
+     * @param id
+     * @return
+     */
+    GrantType GrantTypeDetail(Long id);
 }

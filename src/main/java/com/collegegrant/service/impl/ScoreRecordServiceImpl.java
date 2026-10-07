@@ -182,15 +182,17 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
 
     /**
      * 评分列表
-     *
      * @param page
      * @param size
+     * @param keyword
+     * @param typeId
+     * @param scorerId
      * @return
      */
     @Override
-    public Page<ScoreRecordVO> list(int page, int size, String keyword, Long typeId,Long scorerId) {
+    public Page<ScoreRecordVO> list(int page, int size, String keyword, Long typeId, Long scorerId) {
         //页码信息
-        Page<ScoreRecordVO> pageParam = new Page<>();
+        Page<ScoreRecordVO> pageParam = new Page<>(page, size);
 
 
         Page<ScoreRecordVO> VOPage = scoreRecordMapper.selectScorePage(pageParam, keyword, typeId, scorerId);
@@ -204,6 +206,7 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
      * @param applicationId
      * @return
      */
+    @Override
     public ScoreRecordVO getScoreDetail(Long applicationId) {
 
         //1. 判断申请是否存在
@@ -213,7 +216,9 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
         }
 
         ScoreRecordVO scoreRecordVO = scoreRecordMapper.selectByApplicationId(applicationId);
-
+        if (scoreRecordVO == null) {
+            throw new RuntimeException("该申请暂无评分记录");
+        }
         return scoreRecordVO;
 
     }
@@ -227,9 +232,10 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
      * @param typeId
      * @return
      */
+    @Override
     public Page<ApplicationVO> listPendingApply(int page, int size, String keyword, Long typeId) {
         //页码信息
-        Page<ApplicationVO> pageParam = new Page<>();
+        Page<ApplicationVO> pageParam = new Page<>(page, size);
 
         Page<ApplicationVO> voPage = grantApplicationMapper.selectPendingScorePage(pageParam, keyword, typeId);
 
@@ -242,10 +248,11 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
         return voPage;
 
     }
+
     /**
      * 状态码转文字
      */
-    private   String getStatusText(Integer status) {
+    private String getStatusText(Integer status) {
         if (status == null) return "未知";
         switch (status) {
             case 0:

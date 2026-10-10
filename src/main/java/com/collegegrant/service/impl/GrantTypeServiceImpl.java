@@ -2,9 +2,9 @@ package com.collegegrant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.GrantTypeWithLevelVO;
-import com.collegegrant.entity.GrantLevel;
-import com.collegegrant.entity.GrantType;
+import com.collegegrant.pojo.vo.GrantTypeWithLevelVO;
+import com.collegegrant.pojo.entity.GrantLevel;
+import com.collegegrant.pojo.entity.GrantType;
 import com.collegegrant.mapper.GrantLevelMapper;
 import com.collegegrant.mapper.GrantTypeMapper;
 import com.collegegrant.service.GrantTypeService;

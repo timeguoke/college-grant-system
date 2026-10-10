@@ -1,9 +1,9 @@
 package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.NoticeDTO;
-import com.collegegrant.common.NoticeDetailVO;
-import com.collegegrant.common.NoticeVO;
+import com.collegegrant.pojo.dto.NoticeDTO;
+import com.collegegrant.pojo.vo.NoticeDetailVO;
+import com.collegegrant.pojo.vo.NoticeVO;
 
 public interface PublicNoticeService {
 

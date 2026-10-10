@@ -1,7 +1,7 @@
 package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.entity.SysUser;
+import com.collegegrant.pojo.entity.SysUser;
 
 public interface SysUserService {
 

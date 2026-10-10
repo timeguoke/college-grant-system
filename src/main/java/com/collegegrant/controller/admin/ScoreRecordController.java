@@ -1,7 +1,9 @@
 package com.collegegrant.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.*;
+import com.collegegrant.common.result.PageResult;
+import com.collegegrant.common.result.Result;
+import com.collegegrant.pojo.vo.ScoreRecordVO;
 import com.collegegrant.service.ScoreRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

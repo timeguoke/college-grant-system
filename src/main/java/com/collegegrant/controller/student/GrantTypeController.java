@@ -1,8 +1,8 @@
 package com.collegegrant.controller.student;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.GrantTypeWithLevelVO;
-import com.collegegrant.common.PageResult;
+import com.collegegrant.pojo.vo.GrantTypeWithLevelVO;
+import com.collegegrant.common.result.PageResult;
 import com.collegegrant.service.GrantTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

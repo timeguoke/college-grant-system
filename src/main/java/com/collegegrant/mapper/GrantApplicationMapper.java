@@ -2,8 +2,8 @@ package com.collegegrant.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.ApplicationVO;
-import com.collegegrant.entity.GrantApplication;
+import com.collegegrant.pojo.vo.ApplicationVO;
+import com.collegegrant.pojo.entity.GrantApplication;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

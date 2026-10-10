@@ -1,11 +1,11 @@
 package com.collegegrant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.collegegrant.common.LoginDTO;
-import com.collegegrant.common.LoginVO;
-import com.collegegrant.entity.Student;
-import com.collegegrant.entity.SysUser;
-import com.collegegrant.entity.Teacher;
+import com.collegegrant.pojo.dto.LoginDTO;
+import com.collegegrant.pojo.vo.LoginVO;
+import com.collegegrant.pojo.entity.Student;
+import com.collegegrant.pojo.entity.SysUser;
+import com.collegegrant.pojo.entity.Teacher;
 import com.collegegrant.mapper.StudentMapper;
 import com.collegegrant.mapper.SysUserMapper;
 import com.collegegrant.mapper.TeacherMapper;

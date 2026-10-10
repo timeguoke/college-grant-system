@@ -4,7 +4,7 @@
 <mapper namespace="com.collegegrant.mapper.EvaluationResultMapper">
 
     <!-- 评定结果VO结果映射（列表用，不含4个维度得分） -->
-    <resultMap id="evaluationResultVOMap" type="com.collegegrant.common.EvaluationResultVO">
+    <resultMap id="evaluationResultVOMap" type="com.collegegrant.pojo.vo.EvaluationResultVO">
         <id property="id" column="id"/>
         <result property="applicationId" column="application_id"/>
         <result property="studentName" column="student_name"/>
@@ -19,7 +19,7 @@
     </resultMap>
 
     <!-- 评定结果VO结果映射（详情用，含4个维度得分） -->
-    <resultMap id="evaluationResultDetailMap" type="com.collegegrant.common.EvaluationResultVO" extends="evaluationResultVOMap">
+    <resultMap id="evaluationResultDetailMap" type="com.collegegrant.pojo.vo.EvaluationResultVO" extends="evaluationResultVOMap">
         <result property="economicScore" column="economic_score"/>
         <result property="familyBurdenScore" column="family_burden_score"/>
         <result property="specialHardshipScore" column="special_hardship_score"/>

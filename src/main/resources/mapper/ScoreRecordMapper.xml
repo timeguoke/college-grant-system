@@ -4,7 +4,7 @@
 <mapper namespace="com.collegegrant.mapper.ScoreRecordMapper">
 
     <!-- 评分记录结果映射 -->
-    <resultMap id="scoreRecordVOMap" type="com.collegegrant.common.ScoreRecordVO">
+    <resultMap id="scoreRecordVOMap" type="com.collegegrant.pojo.vo.ScoreRecordVO">
         <id property="id" column="id"/>
         <result property="applicationId" column="application_id"/>
         <result property="studentId" column="student_id"/>

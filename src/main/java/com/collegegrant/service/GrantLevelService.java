@@ -1,6 +1,6 @@
 package com.collegegrant.service;
 
-import com.collegegrant.entity.GrantLevel;
+import com.collegegrant.pojo.entity.GrantLevel;
 
 import java.util.List;
 

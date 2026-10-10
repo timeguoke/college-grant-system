@@ -1,7 +1,12 @@
 package com.collegegrant.controller.teacher;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.*;
+import com.collegegrant.common.context.UserContext;
+import com.collegegrant.common.result.PageResult;
+import com.collegegrant.common.result.Result;
+import com.collegegrant.pojo.dto.ScoreRecordDTO;
+import com.collegegrant.pojo.vo.ApplicationVO;
+import com.collegegrant.pojo.vo.ScoreRecordVO;
 import com.collegegrant.service.ScoreRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

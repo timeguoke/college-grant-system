@@ -1,8 +1,8 @@
 package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.ApplicationDTO;
-import com.collegegrant.common.ApplicationVO;
+import com.collegegrant.pojo.dto.ApplicationDTO;
+import com.collegegrant.pojo.vo.ApplicationVO;
 
 public interface GrantApplicationService {
     /**

@@ -1,17 +1,15 @@
 package com.collegegrant.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.ApplicationVO;
-import com.collegegrant.common.PageResult;
-import com.collegegrant.common.Result;
+import com.collegegrant.pojo.vo.ApplicationVO;
+import com.collegegrant.common.result.PageResult;
+import com.collegegrant.common.result.Result;
 import com.collegegrant.service.GrantApplicationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController("adminGrantApplicationController")
 @RequestMapping("/api/admin/application")

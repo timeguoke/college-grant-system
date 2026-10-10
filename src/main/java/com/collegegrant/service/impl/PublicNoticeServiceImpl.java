@@ -2,12 +2,12 @@ package com.collegegrant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.NoticeDTO;
-import com.collegegrant.common.NoticeDetailVO;
-import com.collegegrant.common.NoticeVO;
-import com.collegegrant.common.UserContext;
-import com.collegegrant.entity.GrantApplication;
-import com.collegegrant.entity.PublicNotice;
+import com.collegegrant.pojo.dto.NoticeDTO;
+import com.collegegrant.pojo.vo.NoticeDetailVO;
+import com.collegegrant.pojo.vo.NoticeVO;
+import com.collegegrant.common.context.UserContext;
+import com.collegegrant.pojo.entity.GrantApplication;
+import com.collegegrant.pojo.entity.PublicNotice;
 import com.collegegrant.mapper.GrantApplicationMapper;
 import com.collegegrant.mapper.PublicNoticeMapper;
 import com.collegegrant.service.PublicNoticeService;

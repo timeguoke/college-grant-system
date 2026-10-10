@@ -3,8 +3,8 @@ package com.collegegrant.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.ScoreRecordVO;
-import com.collegegrant.entity.ScoreRecord;
+import com.collegegrant.pojo.vo.ScoreRecordVO;
+import com.collegegrant.pojo.entity.ScoreRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

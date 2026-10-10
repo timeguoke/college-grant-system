@@ -4,7 +4,7 @@
 <mapper namespace="com.collegegrant.mapper.GrantApplicationMapper">
 
     <!-- 申请VO结果映射：SQL列名 → Java属性名 -->
-    <resultMap id="applicationVOMap" type="com.collegegrant.common.ApplicationVO">
+    <resultMap id="applicationVOMap" type="com.collegegrant.pojo.vo.ApplicationVO">
         <id property="id" column="id"/>
         <result property="typeId" column="type_id"/>
         <result property="typeName" column="type_name"/>

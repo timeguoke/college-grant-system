@@ -4,7 +4,7 @@
 <mapper namespace="com.collegegrant.mapper.PublicNoticeMapper">
 
     <!-- 公示列表VO结果映射 -->
-    <resultMap id="noticeVOMap" type="com.collegegrant.common.NoticeVO">
+    <resultMap id="noticeVOMap" type="com.collegegrant.pojo.vo.NoticeVO">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
@@ -19,7 +19,7 @@
     </resultMap>
 
     <!-- 公示详情VO结果映射 -->
-    <resultMap id="noticeDetailVOMap" type="com.collegegrant.common.NoticeDetailVO">
+    <resultMap id="noticeDetailVOMap" type="com.collegegrant.pojo.vo.NoticeDetailVO">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
@@ -35,7 +35,7 @@
     </resultMap>
 
     <!-- 公示受助学生VO结果映射 -->
-    <resultMap id="noticeStudentVOMap" type="com.collegegrant.common.NoticeDetailVO$NoticeStudentVO">
+    <resultMap id="noticeStudentVOMap" type="com.collegegrant.pojo.vo.NoticeDetailVO$NoticeStudentVO">
         <result property="studentName" column="student_name"/>
         <result property="studentNo" column="student_no"/>
         <result property="levelName" column="level_name"/>

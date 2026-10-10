@@ -1,7 +1,7 @@
 package com.collegegrant.controller.admin;
 
-import com.collegegrant.common.Result;
-import com.collegegrant.entity.GrantLevel;
+import com.collegegrant.common.result.Result;
+import com.collegegrant.pojo.entity.GrantLevel;
 import com.collegegrant.service.GrantLevelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

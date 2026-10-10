@@ -1,6 +1,6 @@
 package com.collegegrant.config;
 
-import com.collegegrant.common.Result;
+import com.collegegrant.common.result.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

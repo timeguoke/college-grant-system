@@ -1,9 +1,9 @@
 package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.ApplicationVO;
-import com.collegegrant.common.ScoreRecordDTO;
-import com.collegegrant.common.ScoreRecordVO;
+import com.collegegrant.pojo.vo.ApplicationVO;
+import com.collegegrant.pojo.dto.ScoreRecordDTO;
+import com.collegegrant.pojo.vo.ScoreRecordVO;
 
 public interface ScoreRecordService {
     /**

@@ -1,7 +1,7 @@
 package com.collegegrant.service;
 
-import com.collegegrant.common.LoginDTO;
-import com.collegegrant.common.LoginVO;
+import com.collegegrant.pojo.dto.LoginDTO;
+import com.collegegrant.pojo.vo.LoginVO;
 
 public interface LoginService {
     /**

@@ -1,7 +1,7 @@
 package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.entity.Teacher;
+import com.collegegrant.pojo.entity.Teacher;
 
 
 public interface TeacherService {

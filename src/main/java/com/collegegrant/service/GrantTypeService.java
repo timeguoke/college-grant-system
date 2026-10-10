@@ -1,8 +1,8 @@
 package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.GrantTypeWithLevelVO;
-import com.collegegrant.entity.GrantType;
+import com.collegegrant.pojo.vo.GrantTypeWithLevelVO;
+import com.collegegrant.pojo.entity.GrantType;
 
 public interface GrantTypeService {
     /**

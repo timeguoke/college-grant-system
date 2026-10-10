@@ -2,9 +2,9 @@ package com.collegegrant.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.NoticeDetailVO;
-import com.collegegrant.common.NoticeVO;
-import com.collegegrant.entity.PublicNotice;
+import com.collegegrant.pojo.vo.NoticeDetailVO;
+import com.collegegrant.pojo.vo.NoticeVO;
+import com.collegegrant.pojo.entity.PublicNotice;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

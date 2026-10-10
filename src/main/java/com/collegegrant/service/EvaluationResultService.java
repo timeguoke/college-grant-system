@@ -1,9 +1,9 @@
 package com.collegegrant.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.collegegrant.common.EvaluateDTO;
-import com.collegegrant.common.EvaluateResultVO;
-import com.collegegrant.common.EvaluationResultVO;
+import com.collegegrant.pojo.dto.EvaluateDTO;
+import com.collegegrant.pojo.vo.EvaluateResultVO;
+import com.collegegrant.pojo.vo.EvaluationResultVO;
 
 public interface EvaluationResultService {
     /**

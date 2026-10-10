@@ -1,7 +1,7 @@
 package com.collegegrant.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.collegegrant.entity.GrantType;
+import com.collegegrant.pojo.entity.GrantType;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

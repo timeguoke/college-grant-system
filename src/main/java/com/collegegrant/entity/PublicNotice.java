@@ -30,6 +30,9 @@ public class PublicNotice {
     /** 公示内容 */
     private String content;
 
+    /** 助学金类型ID */
+    private Long typeId;
+
     /** 公示开始时间 */
     private LocalDateTime startTime;
 

@@ -3,6 +3,85 @@
 <!--suppress XmlUnresolvedReference -->
 <mapper namespace="com.collegegrant.mapper.EvaluationResultMapper">
 
+    <!-- 评定结果VO结果映射（列表用，不含4个维度得分） -->
+    <resultMap id="evaluationResultVOMap" type="com.collegegrant.common.EvaluationResultVO">
+        <id property="id" column="id"/>
+        <result property="applicationId" column="application_id"/>
+        <result property="studentName" column="student_name"/>
+        <result property="studentNo" column="student_no"/>
+        <result property="typeName" column="type_name"/>
+        <result property="score" column="total_score"/>
+        <result property="ranking" column="score_rank"/>
+        <result property="isSpecial" column="is_special"/>
+        <result property="levelName" column="level_name"/>
+        <result property="grantAmount" column="grant_amount"/>
+        <result property="createTime" column="evaluate_time"/>
+    </resultMap>
 
+    <!-- 评定结果VO结果映射（详情用，含4个维度得分） -->
+    <resultMap id="evaluationResultDetailMap" type="com.collegegrant.common.EvaluationResultVO" extends="evaluationResultVOMap">
+        <result property="economicScore" column="economic_score"/>
+        <result property="familyBurdenScore" column="family_burden_score"/>
+        <result property="specialHardshipScore" column="special_hardship_score"/>
+        <result property="disasterScore" column="disaster_score"/>
+    </resultMap>
+
+    <!-- 分页查询评定结果列表 -->
+    <select id="selectResultPage" resultMap="evaluationResultVOMap">
+        SELECT
+            er.id,
+            er.application_id,
+            s.name       AS student_name,
+            s.student_no AS student_no,
+            gt.type_name AS type_name,
+            er.total_score,
+            er.score_rank,
+            CASE WHEN ga.special_type > 0 THEN 1 ELSE 0 END AS is_special,
+            gl.level_name,
+            gl.amount    AS grant_amount,
+            er.evaluate_time
+        FROM evaluation_result er
+            INNER JOIN grant_application ga ON er.application_id = ga.id
+            INNER JOIN student s            ON er.student_id = s.id
+            INNER JOIN grant_type gt        ON ga.type_id = gt.id
+            LEFT JOIN grant_level gl        ON er.level_id = gl.id
+        WHERE
+            <if test="typeId != null">
+                ga.type_id = #{typeId}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                <if test="typeId != null">AND</if>
+                (s.name LIKE CONCAT('%', #{keyword}, '%')
+                     OR s.student_no LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        ORDER BY er.score_rank ASC
+    </select>
+
+    <!-- 查询评定结果详情（含4个维度得分） -->
+    <select id="selectResultDetail" resultMap="evaluationResultDetailMap">
+        SELECT
+            er.id,
+            er.application_id,
+            s.name       AS student_name,
+            s.student_no AS student_no,
+            gt.type_name AS type_name,
+            er.total_score,
+            er.score_rank,
+            CASE WHEN ga.special_type > 0 THEN 1 ELSE 0 END AS is_special,
+            gl.level_name,
+            gl.amount    AS grant_amount,
+            er.evaluate_time,
+            sr.economic_score,
+            sr.family_burden_score,
+            sr.special_hardship_score,
+            sr.disaster_score
+        FROM evaluation_result er
+            INNER JOIN grant_application ga ON er.application_id = ga.id
+            INNER JOIN student s            ON er.student_id = s.id
+            INNER JOIN grant_type gt        ON ga.type_id = gt.id
+            LEFT JOIN grant_level gl        ON er.level_id = gl.id
+            LEFT JOIN score_record sr       ON er.application_id = sr.application_id
+        WHERE er.id = #{id}
+    </select>
 
 </mapper>

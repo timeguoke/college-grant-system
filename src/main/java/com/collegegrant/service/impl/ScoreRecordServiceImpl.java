@@ -57,8 +57,7 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
         }
 
         // 校验：特殊困难学生不需要评分
-        Student student = studentMapper.selectById(grantApplication.getStudentId());
-        if (student.getSpecialType() != null && student.getSpecialType() > 0) {
+        if (grantApplication.getSpecialType() != null && grantApplication.getSpecialType() > 0) {
             throw new RuntimeException("特殊困难学生无需评分，将直接参与评定");
         }
         //3. 校验：该申请已经评过分，禁止重复评分

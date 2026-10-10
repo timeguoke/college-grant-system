@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress XmlUnresolvedReference -->
+<mapper namespace="com.collegegrant.mapper.PublicNoticeMapper">
+
+    <!-- 公示列表VO结果映射 -->
+    <resultMap id="noticeVOMap" type="com.collegegrant.common.NoticeVO">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status"/>
+        <result property="statusText" column="status_text"/>
+        <result property="publisherName" column="publisher_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="typeId" column="type_id"/>
+        <result property="typeName" column="type_name"/>
+    </resultMap>
+
+    <!-- 公示详情VO结果映射 -->
+    <resultMap id="noticeDetailVOMap" type="com.collegegrant.common.NoticeDetailVO">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status"/>
+        <result property="statusText" column="status_text"/>
+        <result property="publisherName" column="publisher_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="typeId" column="type_id"/>
+        <result property="typeName" column="type_name"/>
+    </resultMap>
+
+    <!-- 公示受助学生VO结果映射 -->
+    <resultMap id="noticeStudentVOMap" type="com.collegegrant.common.NoticeDetailVO$NoticeStudentVO">
+        <result property="studentName" column="student_name"/>
+        <result property="studentNo" column="student_no"/>
+        <result property="levelName" column="level_name"/>
+        <result property="grantAmount" column="grant_amount"/>
+    </resultMap>
+
+    <!-- 管理员分页查询公示列表 -->
+    <select id="selectNoticePage" resultMap="noticeVOMap">
+        SELECT
+            n.id,
+            n.title,
+            n.content,
+            n.start_time,
+            n.end_time,
+            n.status,
+            CASE n.status
+                WHEN 0 THEN '未发布'
+                WHEN 1 THEN '公示中'
+                WHEN 2 THEN '已结束'
+            END AS status_text,
+            u.name AS publisher_name,
+            n.create_time,
+            n.type_id,
+            gt.type_name
+        FROM public_notice n
+            LEFT JOIN sys_user u ON n.publisher_id = u.user_id AND u.role = 0
+            LEFT JOIN grant_type gt ON n.type_id = gt.id
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND n.title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="status != null">
+                AND n.status = #{status}
+            </if>
+        </where>
+        ORDER BY n.create_time DESC
+    </select>
+
+    <!-- 学生端分页查询已发布的公示列表 -->
+    <select id="selectPublishedNoticePage" resultMap="noticeVOMap">
+        SELECT
+            n.id,
+            n.title,
+            n.content,
+            n.start_time,
+            n.end_time,
+            n.status,
+            CASE n.status
+                WHEN 0 THEN '未发布'
+                WHEN 1 THEN '公示中'
+                WHEN 2 THEN '已结束'
+            END AS status_text,
+            u.name AS publisher_name,
+            n.create_time,
+            n.type_id,
+            gt.type_name
+        FROM public_notice n
+            LEFT JOIN sys_user u ON n.publisher_id = u.user_id AND u.role = 0
+            LEFT JOIN grant_type gt ON n.type_id = gt.id
+        WHERE n.status = 1
+            <if test="keyword != null and keyword != ''">
+                AND n.title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        ORDER BY n.create_time DESC
+    </select>
+
+    <!-- 查询公示详情 -->
+    <select id="selectNoticeDetail" resultMap="noticeDetailVOMap">
+        SELECT
+            n.id,
+            n.title,
+            n.content,
+            n.start_time,
+            n.end_time,
+            n.status,
+            CASE n.status
+                WHEN 0 THEN '未发布'
+                WHEN 1 THEN '公示中'
+                WHEN 2 THEN '已结束'
+            END AS status_text,
+            u.name AS publisher_name,
+            n.create_time,
+            n.update_time,
+            n.type_id,
+            gt.type_name
+        FROM public_notice n
+            LEFT JOIN sys_user u ON n.publisher_id = u.user_id AND u.role = 0
+            LEFT JOIN grant_type gt ON n.type_id = gt.id
+        WHERE n.id = #{id}
+    </select>
+
+    <!-- 查询公示关联的受助学生列表（按typeId查评定结果，只查评上等级的） -->
+    <select id="selectNoticeStudents" resultMap="noticeStudentVOMap">
+        SELECT
+            s.name AS student_name,
+            s.student_no,
+            gl.level_name,
+            gl.amount AS grant_amount
+        FROM evaluation_result er
+            INNER JOIN grant_application ga ON er.application_id = ga.id
+            INNER JOIN student s ON er.student_id = s.id
+            INNER JOIN grant_level gl ON er.level_id = gl.id
+        WHERE ga.type_id = #{typeId}
+            AND er.level_id IS NOT NULL
+            AND er.level_id != 0
+        ORDER BY er.score_rank ASC
+    </select>
+
+</mapper>

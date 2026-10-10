@@ -1,0 +1,2653 @@
+[
+  {
+    "index": 0,
+    "name": "通用-登录",
+    "desc": "Login Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/login",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100000,
+        "method": "POST",
+        "title": "用户登录",
+        "path": "/api/login",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"token\":{\"type\":\"string\",\"description\":\"登录令牌\"},\"username\":{\"type\":\"string\",\"description\":\"登录账号\"},\"role\":{\"type\":\"integer\",\"description\":\"角色：0管理员，1教师，2学生\"},\"userId\":{\"type\":\"integer\",\"description\":\"关联用户ID\"},\"name\":{\"type\":\"string\",\"description\":\"姓名\"}},\"required\":[\"token\",\"role\",\"userId\",\"username\",\"name\"]}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100001,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "用户登录，返回token和用户信息",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"username\":{\"type\":\"string\",\"description\":\"登录账号\"},\"password\":{\"type\":\"string\",\"description\":\"密码\"}},\"required\":[\"username\",\"password\"],\"title\":\"LoginDTO\"}"
+      }
+    ]
+  },
+  {
+    "index": 1,
+    "name": "管理员-用户管理",
+    "desc": "SysUser Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/user/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100001,
+        "method": "GET",
+        "title": "用户列表（分页）",
+        "path": "/api/admin/user/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "username",
+            "example": "",
+            "desc": "用户名搜索"
+          },
+          {
+            "required": "0",
+            "name": "role",
+            "example": "",
+            "desc": "角色：0管理员，1教师，2学生"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"主键ID\"},\"username\":{\"type\":\"string\",\"description\":\"登录账号\"},\"role\":{\"type\":\"integer\",\"description\":\"角色\"},\"userId\":{\"type\":\"integer\",\"description\":\"关联ID\"},\"name\":{\"type\":\"string\",\"description\":\"姓名\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：0禁用，1正常\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100002,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "分页查询用户列表，支持按用户名和角色搜索",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/user/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100002,
+        "method": "GET",
+        "title": "查询用户详情",
+        "path": "/api/admin/user/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "用户ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\"},\"username\":{\"type\":\"string\"},\"role\":{\"type\":\"integer\"},\"userId\":{\"type\":\"integer\"},\"name\":{\"type\":\"string\"},\"status\":{\"type\":\"integer\"},\"createTime\":{\"type\":\"string\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100002,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "根据ID查询用户详情",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/user/{id}/status",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 100003,
+        "method": "PUT",
+        "title": "启用/禁用用户",
+        "path": "/api/admin/user/{id}/status",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "用户ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100002,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "启用或禁用用户账号",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"status\":{\"type\":\"integer\",\"description\":\"状态：0禁用，1正常\"}},\"required\":[\"status\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/user/reset/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 3,
+        "tag": [],
+        "_id": 100004,
+        "method": "PUT",
+        "title": "重置密码",
+        "path": "/api/admin/user/reset/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "用户ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100002,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "重置用户密码为默认密码123456",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "name": "管理员-学生管理",
+    "desc": "Student Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/student/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100005,
+        "method": "GET",
+        "title": "学生列表（分页）",
+        "path": "/api/admin/student/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "搜索关键词（学号/姓名）"
+          },
+          {
+            "required": "0",
+            "name": "college",
+            "example": "",
+            "desc": "学院"
+          },
+          {
+            "required": "0",
+            "name": "specialType",
+            "example": "",
+            "desc": "特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"主键ID\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"name\":{\"type\":\"string\",\"description\":\"姓名\"},\"gender\":{\"type\":\"integer\",\"description\":\"性别：0男，1女\"},\"college\":{\"type\":\"string\",\"description\":\"学院\"},\"major\":{\"type\":\"string\",\"description\":\"专业\"},\"className\":{\"type\":\"string\",\"description\":\"班级\"},\"phone\":{\"type\":\"string\",\"description\":\"联系电话\"},\"familyIncome\":{\"type\":\"number\",\"description\":\"家庭年收入\"},\"familyMembers\":{\"type\":\"integer\",\"description\":\"家庭人口数\"},\"perCapitaIncome\":{\"type\":\"number\",\"description\":\"人均年收入\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100003,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "分页查询学生列表，新增时自动创建登录账号",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/student",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100006,
+        "method": "POST",
+        "title": "新增学生",
+        "path": "/api/admin/student",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100003,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "新增学生，自动创建登录账号（用户名=学号，默认密码123456）",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"name\":{\"type\":\"string\",\"description\":\"姓名\"},\"gender\":{\"type\":\"integer\",\"description\":\"性别：0男，1女\"},\"college\":{\"type\":\"string\",\"description\":\"学院\"},\"major\":{\"type\":\"string\",\"description\":\"专业\"},\"className\":{\"type\":\"string\",\"description\":\"班级\"},\"phone\":{\"type\":\"string\",\"description\":\"联系电话\"},\"familyIncome\":{\"type\":\"number\",\"description\":\"家庭年收入\"},\"familyMembers\":{\"type\":\"integer\",\"description\":\"家庭人口数\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"}},\"required\":[\"studentNo\",\"name\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/student/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 100007,
+        "method": "GET",
+        "title": "查询学生详情",
+        "path": "/api/admin/student/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "学生ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\"},\"studentNo\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"gender\":{\"type\":\"integer\"},\"college\":{\"type\":\"string\"},\"major\":{\"type\":\"string\"},\"className\":{\"type\":\"string\"},\"phone\":{\"type\":\"string\"},\"familyIncome\":{\"type\":\"number\"},\"familyMembers\":{\"type\":\"integer\"},\"perCapitaIncome\":{\"type\":\"number\"},\"specialType\":{\"type\":\"integer\"},\"createTime\":{\"type\":\"string\"},\"updateTime\":{\"type\":\"string\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100003,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "根据ID查询学生详情",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/student/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 3,
+        "tag": [],
+        "_id": 100008,
+        "method": "PUT",
+        "title": "修改学生信息",
+        "path": "/api/admin/student/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "学生ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100003,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "修改学生信息，学号变化时同步更新登录账号",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"name\":{\"type\":\"string\",\"description\":\"姓名\"},\"gender\":{\"type\":\"integer\",\"description\":\"性别：0男，1女\"},\"college\":{\"type\":\"string\",\"description\":\"学院\"},\"major\":{\"type\":\"string\",\"description\":\"专业\"},\"className\":{\"type\":\"string\",\"description\":\"班级\"},\"phone\":{\"type\":\"string\",\"description\":\"联系电话\"},\"familyIncome\":{\"type\":\"number\",\"description\":\"家庭年收入\"},\"familyMembers\":{\"type\":\"integer\",\"description\":\"家庭人口数\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"}},\"required\":[]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/student/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 4,
+        "tag": [],
+        "_id": 100009,
+        "method": "DELETE",
+        "title": "删除学生",
+        "path": "/api/admin/student/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "学生ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100003,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "删除学生，同时删除关联的登录账号",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "name": "管理员-教师管理",
+    "desc": "Teacher Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/teacher/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100010,
+        "method": "GET",
+        "title": "教师列表（分页）",
+        "path": "/api/admin/teacher/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "搜索关键词（工号/姓名）"
+          },
+          {
+            "required": "0",
+            "name": "college",
+            "example": "",
+            "desc": "学院"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"主键ID\"},\"teacherNo\":{\"type\":\"string\",\"description\":\"工号\"},\"name\":{\"type\":\"string\",\"description\":\"姓名\"},\"gender\":{\"type\":\"integer\",\"description\":\"性别：0男，1女\"},\"college\":{\"type\":\"string\",\"description\":\"学院\"},\"phone\":{\"type\":\"string\",\"description\":\"联系电话\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100004,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "分页查询教师列表，新增时自动创建登录账号",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/teacher",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100011,
+        "method": "POST",
+        "title": "新增教师",
+        "path": "/api/admin/teacher",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100004,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "新增教师，自动创建登录账号（用户名=工号，默认密码123456）",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"teacherNo\":{\"type\":\"string\",\"description\":\"工号\"},\"name\":{\"type\":\"string\",\"description\":\"姓名\"},\"gender\":{\"type\":\"integer\",\"description\":\"性别：0男，1女\"},\"college\":{\"type\":\"string\",\"description\":\"学院\"},\"phone\":{\"type\":\"string\",\"description\":\"联系电话\"}},\"required\":[\"teacherNo\",\"name\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/teacher/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 100012,
+        "method": "GET",
+        "title": "查询教师详情",
+        "path": "/api/admin/teacher/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "教师ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\"},\"teacherNo\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"gender\":{\"type\":\"integer\"},\"college\":{\"type\":\"string\"},\"phone\":{\"type\":\"string\"},\"createTime\":{\"type\":\"string\"},\"updateTime\":{\"type\":\"string\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100004,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "根据ID查询教师详情",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/teacher/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 3,
+        "tag": [],
+        "_id": 100013,
+        "method": "PUT",
+        "title": "修改教师信息",
+        "path": "/api/admin/teacher/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "教师ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100004,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "修改教师信息，工号变化时同步更新登录账号",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"teacherNo\":{\"type\":\"string\",\"description\":\"工号\"},\"name\":{\"type\":\"string\",\"description\":\"姓名\"},\"gender\":{\"type\":\"integer\",\"description\":\"性别：0男，1女\"},\"college\":{\"type\":\"string\",\"description\":\"学院\"},\"phone\":{\"type\":\"string\",\"description\":\"联系电话\"}},\"required\":[]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/teacher/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 4,
+        "tag": [],
+        "_id": 100014,
+        "method": "DELETE",
+        "title": "删除教师",
+        "path": "/api/admin/teacher/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "教师ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100004,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "删除教师，同时删除关联的登录账号",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 4,
+    "name": "管理员-助学金类型管理",
+    "desc": "GrantType Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/grant-type/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700001,
+        "method": "GET",
+        "title": "助学金类型分页列表",
+        "path": "/api/admin/grant-type/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "status",
+            "example": "",
+            "desc": "状态筛选：0停用，1启用"
+          }
+        ],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"description\":\"当前页数据列表\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"主键ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金名称\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：0停用，1可申请\"},\"description\":{\"type\":\"string\",\"description\":\"描述说明\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"}}}}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 7000,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "分页查询助学金类型列表，支持按状态筛选",
+        "markdown": "",
+        "req_body_other": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-type/{id}",
+          "params": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700002,
+        "method": "GET",
+        "title": "助学金类型详情",
+        "path": "/api/admin/grant-type/{id}",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "id",
+            "example": "1",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"主键ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金名称\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：0停用，1可申请\"},\"description\":{\"type\":\"string\",\"description\":\"描述说明\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7000,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "根据ID查询助学金类型详情",
+        "markdown": "",
+        "req_body_other": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-type",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700003,
+        "method": "POST",
+        "title": "新增助学金类型",
+        "path": "/api/admin/grant-type",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7000,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "新增助学金类型（基本信息），等级需在等级管理中单独添加",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"typeName\":{\"type\":\"string\",\"description\":\"助学金名称\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：0停用，1可申请，默认1\"},\"description\":{\"type\":\"string\",\"description\":\"描述说明\"}},\"required\":[\"typeName\"],\"title\":\"GrantType\"}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-type/{id}",
+          "params": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700004,
+        "method": "PUT",
+        "title": "修改助学金类型",
+        "path": "/api/admin/grant-type/{id}",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "id",
+            "example": "1",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7000,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "修改助学金类型基本信息",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"typeName\":{\"type\":\"string\",\"description\":\"助学金名称\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：0停用，1可申请\"},\"description\":{\"type\":\"string\",\"description\":\"描述说明\"}},\"title\":\"GrantType\"}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-type/{id}",
+          "params": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700005,
+        "method": "DELETE",
+        "title": "删除助学金类型",
+        "path": "/api/admin/grant-type/{id}",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "id",
+            "example": "1",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7000,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "删除助学金类型，同时删除该类型下的所有等级",
+        "markdown": "",
+        "req_body_other": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-type/{id}/status",
+          "params": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700006,
+        "method": "PUT",
+        "title": "启用/停用助学金",
+        "path": "/api/admin/grant-type/{id}/status",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "id",
+            "example": "1",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "status",
+            "example": "0",
+            "desc": "状态：0停用，1启用"
+          }
+        ],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7000,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "修改助学金类型的启用/停用状态",
+        "markdown": "",
+        "req_body_other": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-type/count",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700007,
+        "method": "GET",
+        "title": "统计助学金总数",
+        "path": "/api/admin/grant-type/count",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"integer\",\"description\":\"助学金类型总数\"}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7000,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "统计所有助学金类型的总数",
+        "markdown": "",
+        "req_body_other": ""
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "name": "管理员-助学金等级管理",
+    "desc": "GrantLevel Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/grant-level/list/{typeId}",
+          "params": [
+            {
+              "name": "typeId",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700101,
+        "method": "GET",
+        "title": "等级列表",
+        "path": "/api/admin/grant-level/list/{typeId}",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "typeId",
+            "example": "1",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"array\",\"description\":\"等级列表\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"主键ID\"},\"typeId\":{\"type\":\"integer\",\"description\":\"所属助学金类型ID\"},\"levelName\":{\"type\":\"string\",\"description\":\"等级名称，如一等、二等、获奖\"},\"amount\":{\"type\":\"number\",\"description\":\"金额（元）\"},\"minScore\":{\"type\":\"number\",\"description\":\"最低分数线\"},\"sort\":{\"type\":\"integer\",\"description\":\"排序号，越小等级越高\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"}}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7001,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "查询某个助学金下的所有等级，按sort排序",
+        "markdown": "",
+        "req_body_other": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-level/{id}",
+          "params": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700102,
+        "method": "GET",
+        "title": "等级详情",
+        "path": "/api/admin/grant-level/{id}",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "id",
+            "example": "1",
+            "desc": "等级ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"主键ID\"},\"typeId\":{\"type\":\"integer\",\"description\":\"所属助学金类型ID\"},\"levelName\":{\"type\":\"string\",\"description\":\"等级名称，如一等、二等、获奖\"},\"amount\":{\"type\":\"number\",\"description\":\"金额（元）\"},\"minScore\":{\"type\":\"number\",\"description\":\"最低分数线\"},\"sort\":{\"type\":\"integer\",\"description\":\"排序号，越小等级越高\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7001,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "根据ID查询等级详情",
+        "markdown": "",
+        "req_body_other": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-level/{typeId}",
+          "params": [
+            {
+              "name": "typeId",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700103,
+        "method": "POST",
+        "title": "新增等级",
+        "path": "/api/admin/grant-level/{typeId}",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "typeId",
+            "example": "1",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7001,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "给某个助学金新增一个等级",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"levelName\":{\"type\":\"string\",\"description\":\"等级名称，如一等、二等、获奖\"},\"amount\":{\"type\":\"number\",\"description\":\"金额（元）\"},\"minScore\":{\"type\":\"number\",\"description\":\"最低分数线\"},\"sort\":{\"type\":\"integer\",\"description\":\"排序号，越小等级越高，默认1\"}},\"required\":[\"levelName\",\"amount\",\"minScore\"],\"title\":\"GrantLevel\"}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-level/{id}",
+          "params": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700104,
+        "method": "PUT",
+        "title": "修改等级",
+        "path": "/api/admin/grant-level/{id}",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "id",
+            "example": "1",
+            "desc": "等级ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7001,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "修改等级信息",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"levelName\":{\"type\":\"string\",\"description\":\"等级名称\"},\"amount\":{\"type\":\"number\",\"description\":\"金额（元）\"},\"minScore\":{\"type\":\"number\",\"description\":\"最低分数线\"},\"sort\":{\"type\":\"integer\",\"description\":\"排序号\"}},\"title\":\"GrantLevel\"}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/grant-level/{id}",
+          "params": [
+            {
+              "name": "id",
+              "type": "string"
+            }
+          ]
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700105,
+        "method": "DELETE",
+        "title": "删除等级",
+        "path": "/api/admin/grant-level/{id}",
+        "req_params": [
+          {
+            "required": "1",
+            "name": "id",
+            "example": "1",
+            "desc": "等级ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7001,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "删除某个等级",
+        "markdown": "",
+        "req_body_other": ""
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "name": "管理员-申请查看",
+    "desc": "Admin Application Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/application/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100021,
+        "method": "GET",
+        "title": "申请列表（分页）",
+        "path": "/api/admin/application/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "status",
+            "example": "",
+            "desc": "状态筛选：0待审核，1通过，2驳回，3已评分，4已评定，5已公示"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "关键词：学号或姓名模糊搜索"
+          },
+          {
+            "required": "0",
+            "name": "typeId",
+            "example": "",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"studentId\":{\"type\":\"integer\",\"description\":\"学生ID\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"},\"applyReason\":{\"type\":\"string\",\"description\":\"申请理由\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"},\"specialProof\":{\"type\":\"string\",\"description\":\"特殊困难证明材料路径\"},\"status\":{\"type\":\"integer\",\"description\":\"状态\"},\"statusText\":{\"type\":\"string\",\"description\":\"状态文字\"},\"reviewerId\":{\"type\":\"integer\",\"description\":\"审核人ID\"},\"reviewerName\":{\"type\":\"string\",\"description\":\"审核人姓名\"},\"reviewComment\":{\"type\":\"string\",\"description\":\"审核意见\"},\"reviewTime\":{\"type\":\"string\",\"description\":\"审核时间\"},\"createTime\":{\"type\":\"string\",\"description\":\"提交时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100006,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "管理员分页查询所有申请，支持按状态、学号/姓名、助学金类型筛选",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/application/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100022,
+        "method": "GET",
+        "title": "申请详情",
+        "path": "/api/admin/application/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\"},\"studentId\":{\"type\":\"integer\"},\"studentNo\":{\"type\":\"string\"},\"studentName\":{\"type\":\"string\"},\"typeId\":{\"type\":\"integer\"},\"typeName\":{\"type\":\"string\"},\"applyReason\":{\"type\":\"string\"},\"familySituation\":{\"type\":\"string\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"},\"specialProof\":{\"type\":\"string\",\"description\":\"特殊困难证明材料路径\"},\"status\":{\"type\":\"integer\"},\"statusText\":{\"type\":\"string\"},\"reviewerId\":{\"type\":\"integer\"},\"reviewerName\":{\"type\":\"string\"},\"reviewComment\":{\"type\":\"string\"},\"reviewTime\":{\"type\":\"string\"},\"createTime\":{\"type\":\"string\"},\"updateTime\":{\"type\":\"string\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100006,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "管理员查看申请详情",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 7,
+    "name": "管理员-评分查看",
+    "desc": "Admin Score Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/score/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100023,
+        "method": "GET",
+        "title": "评分列表（分页）",
+        "path": "/api/admin/score/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "applicationId",
+            "example": "",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"评分记录ID\"},\"applicationId\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"teacherId\":{\"type\":\"integer\",\"description\":\"评分教师ID\"},\"teacherName\":{\"type\":\"string\",\"description\":\"评分教师姓名\"},\"score\":{\"type\":\"number\",\"description\":\"评分\"},\"comment\":{\"type\":\"string\",\"description\":\"评分评语\"},\"createTime\":{\"type\":\"string\",\"description\":\"评分时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100007,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "管理员查看评分记录",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/score/{applicationId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100024,
+        "method": "GET",
+        "title": "查看申请评分详情",
+        "path": "/api/admin/score/{applicationId}",
+        "req_params": [
+          {
+            "name": "applicationId",
+            "example": "1",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\"},\"applicationId\":{\"type\":\"integer\"},\"studentName\":{\"type\":\"string\"},\"scorerId\":{\"type\":\"integer\"},\"scorerName\":{\"type\":\"string\"},\"economicScore\":{\"type\":\"number\"},\"familyBurdenScore\":{\"type\":\"number\"},\"specialHardshipScore\":{\"type\":\"number\"},\"disasterScore\":{\"type\":\"number\"},\"scoreComment\":{\"type\":\"string\"},\"scoreTime\":{\"type\":\"string\"}}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100007,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "管理员查看某个申请的所有评分记录",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 8,
+    "name": "管理员-AHP评定",
+    "desc": "Admin Evaluation Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/evaluation/do",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100025,
+        "method": "POST",
+        "title": "执行AHP评定",
+        "path": "/api/admin/evaluation/do",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金名称\"},\"totalCount\":{\"type\":\"integer\",\"description\":\"参与评定总人数\"},\"specialCount\":{\"type\":\"integer\",\"description\":\"特殊困难学生人数\"},\"normalCount\":{\"type\":\"integer\",\"description\":\"普通学生人数\"},\"awardedCount\":{\"type\":\"integer\",\"description\":\"评上人数\"},\"notAwardedCount\":{\"type\":\"integer\",\"description\":\"未评上人数\"},\"levelResults\":{\"type\":\"array\",\"description\":\"各等级评定统计\",\"items\":{\"type\":\"object\",\"properties\":{\"levelName\":{\"type\":\"string\",\"description\":\"等级名称\"},\"count\":{\"type\":\"integer\",\"description\":\"该等级人数\"},\"amount\":{\"type\":\"number\",\"description\":\"金额\"}}}},\"evaluateTime\":{\"type\":\"string\",\"description\":\"评定时间\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100008,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "对已评分的申请执行AHP层次分析评定，计算加权总分并评定等级，返回评定统计结果",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"economicWeight\":{\"type\":\"integer\",\"description\":\"家庭经济情况权重(0-100)\"},\"familyBurdenWeight\":{\"type\":\"integer\",\"description\":\"家庭负担情况权重(0-100)\"},\"specialHardshipWeight\":{\"type\":\"integer\",\"description\":\"特殊困难程度权重(0-100)\"},\"disasterWeight\":{\"type\":\"integer\",\"description\":\"突发困难情况权重(0-100)\"}},\"required\":[\"typeId\",\"economicWeight\",\"familyBurdenWeight\",\"specialHardshipWeight\",\"disasterWeight\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/evaluation/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100026,
+        "method": "GET",
+        "title": "评定结果列表（分页）",
+        "path": "/api/admin/evaluation/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "typeId",
+            "example": "",
+            "desc": "助学金类型ID"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "关键词（学号或学生姓名）"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"评定结果ID\"},\"applicationId\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型\"},\"score\":{\"type\":\"number\",\"description\":\"综合得分\"},\"ranking\":{\"type\":\"integer\",\"description\":\"排名\"},\"isSpecial\":{\"type\":\"integer\",\"description\":\"是否特殊困难学生：0否，1是\"},\"levelName\":{\"type\":\"string\",\"description\":\"等级名称\"},\"grantAmount\":{\"type\":\"number\",\"description\":\"资助金额\"},\"createTime\":{\"type\":\"string\",\"description\":\"评定时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100008,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "查看AHP评定结果列表",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/evaluation/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 100027,
+        "method": "GET",
+        "title": "评定结果详情",
+        "path": "/api/admin/evaluation/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "评定结果ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"评定结果ID\"},\"applicationId\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型\"},\"score\":{\"type\":\"number\",\"description\":\"综合得分\"},\"ranking\":{\"type\":\"integer\",\"description\":\"排名\"},\"isSpecial\":{\"type\":\"integer\",\"description\":\"是否特殊困难学生：0否，1是\"},\"levelName\":{\"type\":\"string\",\"description\":\"等级名称\"},\"grantAmount\":{\"type\":\"number\",\"description\":\"资助金额\"},\"economicScore\":{\"type\":\"number\",\"description\":\"家庭经济得分\"},\"familyBurdenScore\":{\"type\":\"number\",\"description\":\"家庭负担得分\"},\"specialHardshipScore\":{\"type\":\"number\",\"description\":\"特殊困难得分\"},\"disasterScore\":{\"type\":\"number\",\"description\":\"突发困难得分\"},\"createTime\":{\"type\":\"string\",\"description\":\"评定时间\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100008,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "查看评定结果详情",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 9,
+    "name": "管理员-公示管理",
+    "desc": "Admin Notice Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/admin/notice/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 200000,
+        "method": "GET",
+        "title": "公示列表（分页）",
+        "path": "/api/admin/notice/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "关键词搜索"
+          },
+          {
+            "required": "0",
+            "name": "status",
+            "example": "",
+            "desc": "状态：0未发布，1已发布"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"公示ID\"},\"title\":{\"type\":\"string\",\"description\":\"公示标题\"},\"content\":{\"type\":\"string\",\"description\":\"公示内容\"},\"startTime\":{\"type\":\"string\",\"description\":\"公示开始时间\"},\"endTime\":{\"type\":\"string\",\"description\":\"公示结束时间\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：0未发布，1已发布\"},\"statusText\":{\"type\":\"string\",\"description\":\"状态文字\"},\"publisherName\":{\"type\":\"string\",\"description\":\"发布人姓名\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100007,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "分页查询公示列表，支持按状态和关键词搜索",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/notice",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 200001,
+        "method": "POST",
+        "title": "新增公示",
+        "path": "/api/admin/notice",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100007,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "新增加助学金公示",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"title\":{\"type\":\"string\",\"description\":\"公示标题\"},\"content\":{\"type\":\"string\",\"description\":\"公示内容\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"}},\"required\":[\"title\",\"content\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/notice/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 200002,
+        "method": "GET",
+        "title": "公示详情",
+        "path": "/api/admin/notice/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "公示ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"公示ID\"},\"title\":{\"type\":\"string\",\"description\":\"公示标题\"},\"content\":{\"type\":\"string\",\"description\":\"公示内容\"},\"startTime\":{\"type\":\"string\",\"description\":\"公示开始时间\"},\"endTime\":{\"type\":\"string\",\"description\":\"公示结束时间\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：0未发布，1已发布\"},\"statusText\":{\"type\":\"string\",\"description\":\"状态文字\"},\"publisherName\":{\"type\":\"string\",\"description\":\"发布人姓名\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"},\"students\":{\"type\":\"array\",\"description\":\"公示学生名单\",\"items\":{\"type\":\"object\",\"properties\":{\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"levelName\":{\"type\":\"string\",\"description\":\"等级名称\"},\"grantAmount\":{\"type\":\"number\",\"description\":\"资助金额\"}}}}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100007,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "查看公示详情",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/notice/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 3,
+        "tag": [],
+        "_id": 200003,
+        "method": "PUT",
+        "title": "修改公示",
+        "path": "/api/admin/notice/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "公示ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100007,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "修改公示内容",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"title\":{\"type\":\"string\",\"description\":\"公示标题\"},\"content\":{\"type\":\"string\",\"description\":\"公示内容\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"}},\"required\":[]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/notice/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 4,
+        "tag": [],
+        "_id": 200004,
+        "method": "DELETE",
+        "title": "删除公示",
+        "path": "/api/admin/notice/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "公示ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100007,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "删除公示",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/admin/notice/publish/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 5,
+        "tag": [],
+        "_id": 200005,
+        "method": "PUT",
+        "title": "发布公示",
+        "path": "/api/admin/notice/publish/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "公示ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100007,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "发布公示，状态变为已发布",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 10,
+    "name": "教师-申请审核",
+    "desc": "Teacher Application Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/teacher/application/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100034,
+        "method": "GET",
+        "title": "申请列表（分页）",
+        "path": "/api/teacher/application/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "status",
+            "example": "",
+            "desc": "状态筛选：0待审核，1通过，2驳回，3已评分，4已评定，5已公示"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "关键词：学号或姓名模糊搜索"
+          },
+          {
+            "required": "0",
+            "name": "typeId",
+            "example": "",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"studentId\":{\"type\":\"integer\",\"description\":\"学生ID\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"},\"applyReason\":{\"type\":\"string\",\"description\":\"申请理由\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"},\"specialProof\":{\"type\":\"string\",\"description\":\"特殊困难证明材料路径\"},\"status\":{\"type\":\"integer\",\"description\":\"状态\"},\"statusText\":{\"type\":\"string\",\"description\":\"状态文字\"},\"reviewerName\":{\"type\":\"string\",\"description\":\"审核人姓名\"},\"createTime\":{\"type\":\"string\",\"description\":\"提交时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100010,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "教师分页查询申请列表，支持按状态、学号/姓名、助学金类型筛选",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/teacher/application/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100035,
+        "method": "GET",
+        "title": "申请详情",
+        "path": "/api/teacher/application/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\"},\"studentId\":{\"type\":\"integer\"},\"studentNo\":{\"type\":\"string\"},\"studentName\":{\"type\":\"string\"},\"typeId\":{\"type\":\"integer\"},\"typeName\":{\"type\":\"string\"},\"applyReason\":{\"type\":\"string\"},\"familySituation\":{\"type\":\"string\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"},\"specialProof\":{\"type\":\"string\",\"description\":\"特殊困难证明材料路径\"},\"status\":{\"type\":\"integer\"},\"statusText\":{\"type\":\"string\"},\"reviewerId\":{\"type\":\"integer\"},\"reviewerName\":{\"type\":\"string\"},\"reviewComment\":{\"type\":\"string\"},\"reviewTime\":{\"type\":\"string\"},\"createTime\":{\"type\":\"string\"},\"updateTime\":{\"type\":\"string\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100010,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "教师查看申请详情",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/teacher/application/{id}/pass",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 100036,
+        "method": "PUT",
+        "title": "通过申请",
+        "path": "/api/teacher/application/{id}/pass",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100010,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "审核通过申请，只有待审核状态的申请才能通过",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"reviewComment\":{\"type\":\"string\",\"description\":\"审核意见\"}},\"required\":[]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/teacher/application/{id}/reject",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 3,
+        "tag": [],
+        "_id": 100037,
+        "method": "PUT",
+        "title": "驳回申请",
+        "path": "/api/teacher/application/{id}/reject",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100010,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "审核驳回申请，只有待审核状态的申请才能驳回",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"reviewComment\":{\"type\":\"string\",\"description\":\"驳回原因\"}},\"required\":[\"reviewComment\"]}"
+      }
+    ]
+  },
+  {
+    "index": 11,
+    "name": "教师-评分管理",
+    "desc": "Teacher Score Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/teacher/score/pending",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100041,
+        "method": "GET",
+        "title": "待评分申请列表（分页）",
+        "path": "/api/teacher/score/pending",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "关键词（学号/学生姓名）"
+          },
+          {
+            "required": "0",
+            "name": "typeId",
+            "example": "",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"studentId\":{\"type\":\"integer\",\"description\":\"学生ID\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"},\"applyReason\":{\"type\":\"string\",\"description\":\"申请理由\"},\"familySituation\":{\"type\":\"string\",\"description\":\"家庭情况描述\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：1通过\"},\"statusText\":{\"type\":\"string\",\"description\":\"状态文字\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"},\"createTime\":{\"type\":\"string\",\"description\":\"提交时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100011,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "教师查看待评分的申请列表（只显示通过状态的普通学生申请，特殊困难学生无需评分）",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/teacher/score",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100038,
+        "method": "POST",
+        "title": "提交评分",
+        "path": "/api/teacher/score",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100011,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "教师对通过审核的申请进行评分",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"applicationId\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"economicScore\":{\"type\":\"number\",\"description\":\"家庭经济情况分(0-100)\"},\"familyBurdenScore\":{\"type\":\"number\",\"description\":\"家庭负担情况分(0-100)\"},\"specialHardshipScore\":{\"type\":\"number\",\"description\":\"特殊困难程度分(0-100)\"},\"disasterScore\":{\"type\":\"number\",\"description\":\"突发困难情况分(0-100)\"},\"scoreComment\":{\"type\":\"string\",\"description\":\"评分评语\"}},\"required\":[\"applicationId\",\"economicScore\",\"familyBurdenScore\",\"specialHardshipScore\",\"disasterScore\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/teacher/score/{applicationId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 3,
+        "tag": [],
+        "_id": 100039,
+        "method": "PUT",
+        "title": "修改评分",
+        "path": "/api/teacher/score/{applicationId}",
+        "req_params": [
+          {
+            "name": "applicationId",
+            "example": "1",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100011,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "教师修改自己提交的评分",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"economicScore\":{\"type\":\"number\",\"description\":\"家庭经济情况分\"},\"familyBurdenScore\":{\"type\":\"number\",\"description\":\"家庭负担情况分\"},\"specialHardshipScore\":{\"type\":\"number\",\"description\":\"特殊困难程度分\"},\"disasterScore\":{\"type\":\"number\",\"description\":\"突发困难情况分\"},\"scoreComment\":{\"type\":\"string\",\"description\":\"评分评语\"}},\"required\":[]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/teacher/score/{applicationId}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 100042,
+        "method": "GET",
+        "title": "评分详情",
+        "path": "/api/teacher/score/{applicationId}",
+        "req_params": [
+          {
+            "name": "applicationId",
+            "example": "1",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"评分记录ID\"},\"applicationId\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"studentId\":{\"type\":\"integer\",\"description\":\"学生ID\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"},\"economicScore\":{\"type\":\"number\",\"description\":\"家庭经济情况分\"},\"familyBurdenScore\":{\"type\":\"number\",\"description\":\"家庭负担情况分\"},\"specialHardshipScore\":{\"type\":\"number\",\"description\":\"特殊困难程度分\"},\"disasterScore\":{\"type\":\"number\",\"description\":\"突发困难情况分\"},\"scorerId\":{\"type\":\"integer\",\"description\":\"评分教师ID\"},\"scorerName\":{\"type\":\"string\",\"description\":\"评分教师姓名\"},\"scoreComment\":{\"type\":\"string\",\"description\":\"评分评语\"},\"scoreTime\":{\"type\":\"string\",\"description\":\"评分时间\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"}},\"required\":[]}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100011,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "根据申请ID查询评分详情",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/teacher/score/my-list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 4,
+        "tag": [],
+        "_id": 100040,
+        "method": "GET",
+        "title": "我的评分列表（分页）",
+        "path": "/api/teacher/score/my-list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "关键词（学号/学生姓名）"
+          },
+          {
+            "required": "0",
+            "name": "typeId",
+            "example": "",
+            "desc": "助学金类型ID"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"评分记录ID\"},\"applicationId\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"studentId\":{\"type\":\"integer\",\"description\":\"学生ID\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"},\"economicScore\":{\"type\":\"number\",\"description\":\"家庭经济情况分\"},\"familyBurdenScore\":{\"type\":\"number\",\"description\":\"家庭负担情况分\"},\"specialHardshipScore\":{\"type\":\"number\",\"description\":\"特殊困难程度分\"},\"disasterScore\":{\"type\":\"number\",\"description\":\"突发困难情况分\"},\"scorerId\":{\"type\":\"integer\",\"description\":\"评分教师ID\"},\"scorerName\":{\"type\":\"string\",\"description\":\"评分教师姓名\"},\"scoreComment\":{\"type\":\"string\",\"description\":\"评分评语\"},\"scoreTime\":{\"type\":\"string\",\"description\":\"评分时间\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100011,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "教师查看自己提交的评分记录",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 12,
+    "name": "学生-助学金类型",
+    "desc": "Student GrantType Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/student/grant-type/available",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 700201,
+        "method": "GET",
+        "title": "可申请助学金列表（带等级）",
+        "path": "/api/student/grant-type/available",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\",\"description\":\"状态码：200成功，500失败\"},\"msg\":{\"type\":\"string\",\"description\":\"提示信息\"},\"data\":{\"type\":\"array\",\"description\":\"助学金列表\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金名称\"},\"description\":{\"type\":\"string\",\"description\":\"描述说明\"},\"levels\":{\"type\":\"array\",\"description\":\"等级列表\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"等级ID\"},\"levelName\":{\"type\":\"string\",\"description\":\"等级名称\"},\"amount\":{\"type\":\"number\",\"description\":\"金额（元）\"},\"minScore\":{\"type\":\"number\",\"description\":\"最低分数线\"},\"sort\":{\"type\":\"integer\",\"description\":\"排序号\"}}}}}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 7002,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "查询所有可申请的助学金，包含每个助学金的等级列表",
+        "markdown": "",
+        "req_body_other": ""
+      }
+    ]
+  },
+  {
+    "index": 13,
+    "name": "学生-助学金申请",
+    "desc": "Student Application Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/student/application",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 100041,
+        "method": "POST",
+        "title": "提交申请",
+        "path": "/api/student/application",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_query": [],
+        "req_body_type": "json",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100012,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "学生提交助学金申请，同一类型待审核或通过状态不能重复提交",
+        "markdown": "",
+        "req_body_other": "{\"type\":\"object\",\"properties\":{\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"applyReason\":{\"type\":\"string\",\"description\":\"申请理由\"},\"familySituation\":{\"type\":\"string\",\"description\":\"家庭情况描述\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾，不传默认0\"},\"specialProof\":{\"type\":\"string\",\"description\":\"特殊困难证明材料路径（特殊生必填）\"}},\"required\":[\"typeId\",\"applyReason\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/api/student/application/my-list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 100042,
+        "method": "GET",
+        "title": "我的申请列表",
+        "path": "/api/student/application/my-list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"申请ID\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"},\"applyReason\":{\"type\":\"string\",\"description\":\"申请理由\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"},\"specialProof\":{\"type\":\"string\",\"description\":\"特殊困难证明材料路径\"},\"status\":{\"type\":\"integer\",\"description\":\"状态\"},\"statusText\":{\"type\":\"string\",\"description\":\"状态文字\"},\"reviewerName\":{\"type\":\"string\",\"description\":\"审核人姓名\"},\"reviewComment\":{\"type\":\"string\",\"description\":\"审核意见\"},\"createTime\":{\"type\":\"string\",\"description\":\"提交时间\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100012,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "学生查看自己的申请列表",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/student/application/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 100043,
+        "method": "GET",
+        "title": "申请详情",
+        "path": "/api/student/application/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "申请ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\"},\"typeId\":{\"type\":\"integer\"},\"typeName\":{\"type\":\"string\"},\"applyReason\":{\"type\":\"string\"},\"familySituation\":{\"type\":\"string\"},\"specialType\":{\"type\":\"integer\",\"description\":\"特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾\"},\"specialProof\":{\"type\":\"string\",\"description\":\"特殊困难证明材料路径\"},\"status\":{\"type\":\"integer\"},\"statusText\":{\"type\":\"string\"},\"reviewerName\":{\"type\":\"string\"},\"reviewComment\":{\"type\":\"string\"},\"reviewTime\":{\"type\":\"string\"},\"createTime\":{\"type\":\"string\"}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100012,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "学生查看申请详情，只能查看自己的申请",
+        "markdown": ""
+      }
+    ]
+  },
+  {
+    "index": 14,
+    "name": "学生-公示查看",
+    "desc": "Student Notice Controller",
+    "add_time": 1759680000,
+    "up_time": 1759680000,
+    "list": [
+      {
+        "query_path": {
+          "path": "/api/student/notice/list",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 200100,
+        "method": "GET",
+        "title": "公示列表（分页）",
+        "path": "/api/student/notice/list",
+        "req_params": [],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [
+          {
+            "required": "1",
+            "name": "page",
+            "example": "1",
+            "desc": "页码"
+          },
+          {
+            "required": "1",
+            "name": "size",
+            "example": "10",
+            "desc": "每页条数"
+          },
+          {
+            "required": "0",
+            "name": "keyword",
+            "example": "",
+            "desc": "关键词搜索"
+          }
+        ],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"total\":{\"type\":\"integer\",\"description\":\"总记录数\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"公示ID\"},\"title\":{\"type\":\"string\",\"description\":\"公示标题\"},\"content\":{\"type\":\"string\",\"description\":\"公示内容\"},\"startTime\":{\"type\":\"string\",\"description\":\"公示开始时间\"},\"endTime\":{\"type\":\"string\",\"description\":\"公示结束时间\"},\"status\":{\"type\":\"integer\",\"description\":\"状态\"},\"statusText\":{\"type\":\"string\",\"description\":\"状态文字\"},\"publisherName\":{\"type\":\"string\",\"description\":\"发布人姓名\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"}},\"required\":[]},\"description\":\"当前页数据列表\"}},\"required\":[\"code\",\"total\",\"rows\"]}",
+        "project_id": 99999,
+        "catid": 100008,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "学生查看已发布的公示列表",
+        "markdown": ""
+      },
+      {
+        "query_path": {
+          "path": "/api/student/notice/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 1,
+        "tag": [],
+        "_id": 200101,
+        "method": "GET",
+        "title": "公示详情",
+        "path": "/api/student/notice/{id}",
+        "req_params": [
+          {
+            "name": "id",
+            "example": "1",
+            "desc": "公示ID"
+          }
+        ],
+        "req_body_form": [],
+        "req_headers": [],
+        "req_query": [],
+        "req_body_type": "raw",
+        "res_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"integer\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"description\":\"公示ID\"},\"title\":{\"type\":\"string\",\"description\":\"公示标题\"},\"content\":{\"type\":\"string\",\"description\":\"公示内容\"},\"startTime\":{\"type\":\"string\",\"description\":\"公示开始时间\"},\"endTime\":{\"type\":\"string\",\"description\":\"公示结束时间\"},\"status\":{\"type\":\"integer\",\"description\":\"状态：0未发布，1已发布\"},\"statusText\":{\"type\":\"string\",\"description\":\"状态文字\"},\"publisherName\":{\"type\":\"string\",\"description\":\"发布人姓名\"},\"createTime\":{\"type\":\"string\",\"description\":\"创建时间\"},\"updateTime\":{\"type\":\"string\",\"description\":\"更新时间\"},\"typeId\":{\"type\":\"integer\",\"description\":\"助学金类型ID\"},\"typeName\":{\"type\":\"string\",\"description\":\"助学金类型名称\"},\"students\":{\"type\":\"array\",\"description\":\"公示学生名单\",\"items\":{\"type\":\"object\",\"properties\":{\"studentName\":{\"type\":\"string\",\"description\":\"学生姓名\"},\"studentNo\":{\"type\":\"string\",\"description\":\"学号\"},\"levelName\":{\"type\":\"string\",\"description\":\"等级名称\"},\"grantAmount\":{\"type\":\"number\",\"description\":\"资助金额\"}}}}}}},\"required\":[\"code\"]}",
+        "project_id": 99999,
+        "catid": 100008,
+        "uid": 12769,
+        "add_time": 1759680000,
+        "up_time": 1759680000,
+        "__v": 0,
+        "desc": "学生查看公示详情",
+        "markdown": ""
+      }
+    ]
+  }
+]

@@ -25,6 +25,9 @@ public class ApplicationDTO {
     /** 家庭情况描述 */
     private String familySituation;
 
+    /** 特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾 */
+    private Integer specialType;
+
     /** 特殊困难证明材料路径（特殊困难学生必填） */
     private String specialProof;
 }

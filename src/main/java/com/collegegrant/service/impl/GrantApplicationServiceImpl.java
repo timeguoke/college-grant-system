@@ -7,8 +7,11 @@ import com.collegegrant.common.ApplicationDTO;
 import com.collegegrant.common.ApplicationVO;
 import com.collegegrant.common.UserContext;
 import com.collegegrant.entity.GrantApplication;
+import com.collegegrant.entity.Student;
 import com.collegegrant.mapper.GrantApplicationMapper;
+import com.collegegrant.mapper.StudentMapper;
 import com.collegegrant.service.GrantApplicationService;
+import com.collegegrant.service.StudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,8 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
 
     @Autowired
     private GrantApplicationMapper grantApplicationMapper;
+    @Autowired
+    private StudentMapper studentMapper;
 
     /**
      * 提交申请
@@ -50,6 +55,13 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
         Long count = grantApplicationMapper.selectCount(wrapper);
         if (count != null && count > 0) {
             throw new RuntimeException("该助学金类型您已提交过申请，请勿重复提交");
+        }
+
+        // 特殊困难学生必须上传证明材料
+        if (applicationDTO.getSpecialType() != null && applicationDTO.getSpecialType() > 0) {
+            if (applicationDTO.getSpecialProof() == null || applicationDTO.getSpecialProof().trim().isEmpty()) {
+                throw new RuntimeException("特殊困难学生必须上传证明材料");
+            }
         }
 
         GrantApplication grantApplication = GrantApplication.builder()
@@ -202,6 +214,15 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
         //防止并发问题
         if (rows == 0) {
             throw new RuntimeException("申请状态已变更，请刷新后重试");
+        }
+
+        // 教师审核通过时，同步更新学生表的specialType
+        if (status == 1) {
+            LambdaUpdateWrapper<Student> studentWrapper = new LambdaUpdateWrapper<>();
+            studentWrapper.eq(Student::getId, grantApplication.getStudentId());
+            studentWrapper.set(Student::getSpecialType,
+                    grantApplication.getSpecialType() != null ? grantApplication.getSpecialType() : 0);
+            studentMapper.update(null, studentWrapper);
         }
 
     }

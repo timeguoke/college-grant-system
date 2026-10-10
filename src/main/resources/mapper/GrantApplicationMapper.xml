@@ -10,7 +10,8 @@
         <result property="typeName" column="type_name"/>
         <result property="applyReason" column="apply_reason"/>
         <result property="familySituation" column="family_situation"/>
-        <!-- 新方案:特殊困难证明材料路径 -->
+        <result property="specialType" column="special_type"/>
+        <!-- 特殊困难证明材料路径 -->
         <result property="specialProof" column="special_proof"/>
         <result property="status" column="status"/>
         <result property="reviewerId" column="reviewer_id"/>
@@ -31,7 +32,7 @@
         t.type_name,
         a.apply_reason,
         a.family_situation,
-        <!-- 新方案:特殊困难证明材料路径 -->
+        a.special_type,
         a.special_proof,
         a.status,
         a.reviewer_id,
@@ -102,7 +103,7 @@
             t.type_name,
             a.apply_reason,
             a.family_situation,
-            <!-- 新方案:特殊困难证明材料路径 -->
+            a.special_type,
             a.special_proof,
             a.status,
             a.reviewer_id,
@@ -130,6 +131,7 @@
             t.type_name,
             a.apply_reason,
             a.family_situation,
+            a.special_type,
             a.special_proof,
             a.status,
             a.reviewer_id,
@@ -147,7 +149,7 @@
                  LEFT JOIN student s ON a.student_id = s.id
                  LEFT JOIN score_record sr ON a.id = sr.application_id
         WHERE a.status = 1            <!-- 状态：通过 -->
-          AND s.special_type = 0      <!-- 普通学生，特殊困难学生不用评分 -->
+          AND a.special_type = 0      <!-- 普通学生，特殊困难学生不用评分 -->
           AND sr.id IS NULL           <!-- 还没有评分记录 -->
             <if test="keyword != null and keyword != ''">
                 AND (s.student_no LIKE CONCAT('%', #{keyword}, '%')

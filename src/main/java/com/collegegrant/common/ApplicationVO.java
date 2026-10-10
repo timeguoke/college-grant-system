@@ -32,7 +32,10 @@ public class ApplicationVO {
     /** 家庭情况描述 */
     private String familySituation;
 
-    /** 新方案:特殊困难证明材料路径（特殊生有值，普通生为空） */
+    /** 特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾 */
+    private Integer specialType;
+
+    /** 特殊困难证明材料路径（特殊生有值，普通生为空） */
     private String specialProof;
 
     /** 状态：0待审核，1通过，2驳回，3已评分，4已评定，5已公示 */

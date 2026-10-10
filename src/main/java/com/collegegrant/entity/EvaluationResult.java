@@ -38,7 +38,7 @@ public class EvaluationResult {
     private Integer scoreRank;
 
     /** 评定等级：1一等，2二等，3三等 */
-    private Integer grantLevel;
+    private Long levelId;
 
     /** 评定人ID */
     private Long evaluatorId;

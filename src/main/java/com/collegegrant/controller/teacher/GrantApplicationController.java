@@ -30,9 +30,10 @@ public class GrantApplicationController {
                                               @RequestParam(defaultValue = "10") int size,
                                               @RequestParam(required = false) String keyword,
                                               @RequestParam(required = false) Integer status,
-                                              @RequestParam(required = false) Long typeId) {
-        log.info("申请列表分页,分页信息 page={},size={},keyword={},status={},typeId={}", page, size, keyword, status, typeId);
-        Page<ApplicationVO> result = grantApplicationService.list(page, size, keyword, status, typeId);
+                                              @RequestParam(required = false) Long typeId,
+                                              @RequestParam(required = false) Integer specialType) {
+        log.info("申请列表分页,分页信息 page={},size={},keyword={},status={},typeId={},specialType={}", page, size, keyword, status, typeId, specialType);
+        Page<ApplicationVO> result = grantApplicationService.list(page, size, keyword, status, typeId, specialType);
         //总记录数
         Long total = result.getTotal();
         //数据

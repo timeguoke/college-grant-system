@@ -38,7 +38,7 @@ public interface GrantApplicationService {
      * @param typeId
      * @return
      */
-    Page<ApplicationVO> list(int page, int size, String keyword, Integer status, Long typeId);
+    Page<ApplicationVO> list(int page, int size, String keyword, Integer status, Long typeId, Integer specialType);
 
     /**
      * 通过申请 /驳回申请

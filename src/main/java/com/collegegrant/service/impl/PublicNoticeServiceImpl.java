@@ -65,6 +65,8 @@ public class PublicNoticeServiceImpl implements PublicNoticeService {
                 .title(noticeDTO.getTitle())
                 .content(noticeDTO.getContent())
                 .typeId(noticeDTO.getTypeId())
+                .startTime(noticeDTO.getStartTime())
+                .endTime(noticeDTO.getEndTime())
                 .status(0)
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
@@ -88,6 +90,8 @@ public class PublicNoticeServiceImpl implements PublicNoticeService {
                 .set(PublicNotice::getTitle, noticeDTO.getTitle())
                 .set(PublicNotice::getContent, noticeDTO.getContent())
                 .set(PublicNotice::getTypeId, noticeDTO.getTypeId())
+                .set(PublicNotice::getStartTime, noticeDTO.getStartTime())
+                .set(PublicNotice::getEndTime, noticeDTO.getEndTime())
                 .set(PublicNotice::getUpdateTime, LocalDateTime.now());
         publicNoticeMapper.update(null, wrapper);
     }
@@ -116,13 +120,15 @@ public class PublicNoticeServiceImpl implements PublicNoticeService {
         if (notice.getStatus() != 0) {
             throw new RuntimeException("该公示已发布，不能重复发布");
         }
-        // 2. 更新公示状态为公示中
+        // 2. 更新公示状态为公示中（若创建时已预设公示期则沿用，否则开始时间取当前）
         Long publisherId = UserContext.getUserId();
+        LocalDateTime startTime = notice.getStartTime() != null ? notice.getStartTime() : LocalDateTime.now();
         LambdaUpdateWrapper<PublicNotice> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(PublicNotice::getId, id)
                 .set(PublicNotice::getStatus, 1)
                 .set(PublicNotice::getPublisherId, publisherId)
-                .set(PublicNotice::getStartTime, LocalDateTime.now())
+                .set(PublicNotice::getStartTime, startTime)
+                .set(PublicNotice::getEndTime, notice.getEndTime())
                 .set(PublicNotice::getUpdateTime, LocalDateTime.now());
         publicNoticeMapper.update(null, wrapper);
         // 3. 更新该类型下已评定的申请状态为"已公示"（status=5）
@@ -131,5 +137,35 @@ public class PublicNoticeServiceImpl implements PublicNoticeService {
                 .eq(GrantApplication::getStatus, 4)
                 .set(GrantApplication::getStatus, 5);
         grantApplicationMapper.update(null, appWrapper);
+    }
+
+    @Override
+    @Transactional
+    public void end(Long id) {
+        PublicNotice notice = publicNoticeMapper.selectById(id);
+        if (notice == null) {
+            throw new RuntimeException("公示不存在");
+        }
+        if (notice.getStatus() != 1) {
+            throw new RuntimeException("仅公示中的公示可以结束");
+        }
+        LambdaUpdateWrapper<PublicNotice> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(PublicNotice::getId, id)
+                .set(PublicNotice::getStatus, 2)
+                .set(PublicNotice::getEndTime, LocalDateTime.now())
+                .set(PublicNotice::getUpdateTime, LocalDateTime.now());
+        publicNoticeMapper.update(null, wrapper);
+    }
+
+    @Override
+    public java.util.Map<String, Long> stats() {
+        java.util.Map<String, Long> map = new java.util.HashMap<>();
+        map.put("unpublished", publicNoticeMapper.selectCount(
+                new LambdaUpdateWrapper<PublicNotice>().eq(PublicNotice::getStatus, 0)));
+        map.put("publishing", publicNoticeMapper.selectCount(
+                new LambdaUpdateWrapper<PublicNotice>().eq(PublicNotice::getStatus, 1)));
+        map.put("ended", publicNoticeMapper.selectCount(
+                new LambdaUpdateWrapper<PublicNotice>().eq(PublicNotice::getStatus, 2)));
+        return map;
     }
 }

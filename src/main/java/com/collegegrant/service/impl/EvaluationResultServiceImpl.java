@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.collegegrant.pojo.dto.EvaluateDTO;
+import com.collegegrant.pojo.dto.EvaluationExportDTO;
 import com.collegegrant.pojo.vo.EvaluateResultVO;
 import com.collegegrant.pojo.vo.EvaluationResultVO;
 import com.collegegrant.common.context.UserContext;
@@ -291,6 +292,31 @@ public class EvaluationResultServiceImpl implements EvaluationResultService {
     @Override
     public EvaluationResultVO getEvalDetail(Long id) {
         return evaluationResultMapper.selectResultDetail(id);
+    }
+
+    /**
+     * 导出评定结果
+     */
+    @Override
+    public List<EvaluationExportDTO> getExportData(Long typeId) {
+        // 查询该类型所有评定结果（不分页）
+        Page<EvaluationResultVO> pageParam = new Page<>(1, 10000);
+        Page<EvaluationResultVO> resultPage = evaluationResultMapper.selectResultPage(pageParam, typeId, null);
+
+        List<EvaluationExportDTO> exportList = new ArrayList<>();
+        for (EvaluationResultVO vo : resultPage.getRecords()) {
+            EvaluationExportDTO dto = new EvaluationExportDTO();
+            dto.setRanking(vo.getRanking());
+            dto.setStudentName(vo.getStudentName());
+            dto.setStudentNo(vo.getStudentNo());
+            dto.setTypeName(vo.getTypeName());
+            dto.setScore(vo.getScore() != null ? vo.getScore().toString() : "");
+            dto.setIsSpecial(vo.getIsSpecial() != null && vo.getIsSpecial() == 1 ? "是" : "否");
+            dto.setLevelName(vo.getLevelName() != null ? vo.getLevelName() : "未评上");
+            dto.setGrantAmount(vo.getGrantAmount() != null ? vo.getGrantAmount().toString() : "");
+            exportList.add(dto);
+        }
+        return exportList;
     }
 
 }

@@ -32,7 +32,8 @@ public interface GrantApplicationMapper extends BaseMapper<GrantApplication> {
                                    @Param("studentId") Long studentId,
                                    @Param("status") Integer status,
                                    @Param("typeId") Long typeId,
-                                   @Param("keyword") String keyword);
+                                   @Param("keyword") String keyword,
+                                   @Param("specialType") Integer specialType);
 
     /**
      * 根据ID查询申请详情（联查助学金类型、审核人、学生信息）

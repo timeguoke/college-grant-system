@@ -32,6 +32,15 @@ public class ApplicationVO {
     /** 家庭情况描述 */
     private String familySituation;
 
+    /** 申请时填报的家庭年收入（元） */
+    private java.math.BigDecimal familyIncome;
+
+    /** 申请时填报的家庭人口数 */
+    private Integer familyMembers;
+
+    /** 人均年收入（元） */
+    private java.math.BigDecimal perCapitaIncome;
+
     /** 特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾 */
     private Integer specialType;
 

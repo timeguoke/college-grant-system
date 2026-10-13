@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 放行跨域预检请求（OPTIONS），否则跨域请求会被拦截
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
+
         //从Header里取token
         String token = request.getHeader("Authorization");
         //判断token是否存在
@@ -28,6 +33,32 @@ public class JwtInterceptor implements HandlerInterceptor {
             UserContext.setUserId(Long.valueOf(claims.getId()));// 用户ID，admin默认0
             UserContext.setUsername(claims.getSubject());  // 用户名学号
             UserContext.setRole((Integer) claims.get("role"));
+
+            // ============================================================
+            // 角色权限校验：根据路径前缀判断是否有权限访问
+            // ============================================================
+            String path = request.getRequestURI();
+            Integer role = UserContext.getRole();
+
+            // 管理员接口：只有管理员(role=0)能访问
+            if (path.startsWith("/api/admin/") && role != 0) {
+                response.setStatus(403);
+                response.getWriter().write("无权限访问");
+                return false;
+            }
+            // 教师接口：只有教师(role=1)能访问
+            if (path.startsWith("/api/teacher/") && role != 1) {
+                response.setStatus(403);
+                response.getWriter().write("无权限访问");
+                return false;
+            }
+            // 学生接口：只有学生(role=2)能访问
+            if (path.startsWith("/api/student/") && role != 2) {
+                response.setStatus(403);
+                response.getWriter().write("无权限访问");
+                return false;
+            }
+
             return true;  // true=放行
         } catch (Exception e) {
             // 解析失败，token过期或伪造

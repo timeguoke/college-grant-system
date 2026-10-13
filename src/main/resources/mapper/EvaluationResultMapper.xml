@@ -45,15 +45,15 @@
             INNER JOIN student s            ON er.student_id = s.id
             INNER JOIN grant_type gt        ON ga.type_id = gt.id
             LEFT JOIN grant_level gl        ON er.level_id = gl.id
-        WHERE
+        <where>
             <if test="typeId != null">
-                ga.type_id = #{typeId}
+                AND ga.type_id = #{typeId}
             </if>
             <if test="keyword != null and keyword != ''">
-                <if test="typeId != null">AND</if>
-                (s.name LIKE CONCAT('%', #{keyword}, '%')
+                AND (s.name LIKE CONCAT('%', #{keyword}, '%')
                      OR s.student_no LIKE CONCAT('%', #{keyword}, '%'))
             </if>
+        </where>
         ORDER BY er.score_rank ASC
     </select>
 

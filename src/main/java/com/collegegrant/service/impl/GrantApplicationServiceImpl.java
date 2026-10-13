@@ -63,6 +63,12 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
             }
         }
 
+        // 家庭经济信息校验与人均收入计算（随本次申请记录保存，历史申请互不影响）
+        if (applicationDTO.getFamilyIncome() == null || applicationDTO.getFamilyMembers() == null
+                || applicationDTO.getFamilyMembers() <= 0) {
+            throw new RuntimeException("请填写家庭年收入和家庭人口数");
+        }
+
         GrantApplication grantApplication = GrantApplication.builder()
                 .createTime(LocalDateTime.now())
                 .status(0)
@@ -71,6 +77,11 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
 
         //数据拷贝拷贝
         BeanUtils.copyProperties(applicationDTO, grantApplication);
+        // 自动计算人均年收入 = 家庭年收入 / 家庭人口数
+        grantApplication.setPerCapitaIncome(
+                applicationDTO.getFamilyIncome().divide(
+                        new java.math.BigDecimal(applicationDTO.getFamilyMembers()),
+                        2, java.math.BigDecimal.ROUND_HALF_UP));
         //提交申请
         grantApplicationMapper.insert(grantApplication);
 
@@ -90,7 +101,7 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
         Long studentId = UserContext.getUserId();
         Page<ApplicationVO> pageParam = new Page<>(page, size);
 
-        Page<ApplicationVO> voPage = grantApplicationMapper.selectApplicationPage(pageParam, studentId, null, null, null);
+        Page<ApplicationVO> voPage = grantApplicationMapper.selectApplicationPage(pageParam, studentId, null, null, null, null);
         //填充状态码文字
         for (ApplicationVO VO : voPage.getRecords()) {
             VO.setStatusText(getStatusText(VO.getStatus()));
@@ -164,12 +175,12 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
      * @return
      */
     @Override
-    public Page<ApplicationVO> list(int page, int size, String keyword, Integer status, Long typeId) {
+    public Page<ApplicationVO> list(int page, int size, String keyword, Integer status, Long typeId, Integer specialType) {
 
         Page<ApplicationVO> pageParam = new Page<>(page, size);
 
         Page<ApplicationVO> voPage = grantApplicationMapper
-                .selectApplicationPage(pageParam, null, status, typeId, keyword);
+                .selectApplicationPage(pageParam, null, status, typeId, keyword, specialType);
         //填充状态码文字
         for (ApplicationVO VO : voPage.getRecords()) {
             VO.setStatusText(getStatusText(VO.getStatus()));

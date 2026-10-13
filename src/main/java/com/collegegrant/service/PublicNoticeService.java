@@ -41,4 +41,14 @@ public interface PublicNoticeService {
      * 发布公示
      */
     void publish(Long id);
+
+    /**
+     * 结束公示（公示中 → 已结束）
+     */
+    void end(Long id);
+
+    /**
+     * 公示状态统计（未发布/公示中/已结束数量）
+     */
+    java.util.Map<String, Long> stats();
 }

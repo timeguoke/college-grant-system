@@ -24,7 +24,7 @@ public class Student {
     private String studentNo;
     /** 姓名 */
     private String name;
-    /** 性别：0男，1女 */
+    /** 性别：1男，2女 */
     private Integer gender;
     /** 学院 */
     private String college;
@@ -34,12 +34,6 @@ public class Student {
     private String className;
     /** 联系电话 */
     private String phone;
-    /** 家庭年收入（元） */
-    private BigDecimal familyIncome;
-    /** 家庭人口数 */
-    private Integer familyMembers;
-    /** 人均年收入（元，自动计算） */
-    private BigDecimal perCapitaIncome;
     /** 特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾 */
     private Integer specialType;
     /** 创建时间 */

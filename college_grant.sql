@@ -18,23 +18,20 @@ CREATE TABLE sys_user (
     update_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户登录表';
 
--- 2. 学生信息表
+-- 2. student 学生信息表
 DROP TABLE IF EXISTS student;
 CREATE TABLE student (
-    id                  BIGINT        PRIMARY KEY AUTO_INCREMENT,
-    student_no          VARCHAR(20)   NOT NULL UNIQUE COMMENT '学号',
-    name                VARCHAR(50)   NOT NULL COMMENT '姓名',
-    gender              CHAR(1)       DEFAULT '0' COMMENT '性别：0男，1女',
-    college             VARCHAR(100) COMMENT '学院',
-    major               VARCHAR(100) COMMENT '专业',
-    class_name          VARCHAR(50)  COMMENT '班级',
-    phone               VARCHAR(20)  COMMENT '联系电话',
-    family_income       DECIMAL(10,2) COMMENT '家庭年收入',
-    family_members      INT           DEFAULT 1 COMMENT '家庭人口数',
-    per_capita_income   DECIMAL(10,2) COMMENT '人均年收入',
-    special_type        TINYINT       DEFAULT 0 COMMENT '特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾',
-    create_time         DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    update_time         DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id                 BIGINT        PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+    student_no         VARCHAR(20)  NOT NULL UNIQUE COMMENT '学号',
+    name               VARCHAR(50)  NOT NULL COMMENT '姓名',
+    gender             TINYINT      DEFAULT 1 COMMENT '性别：1男，2女',
+    college            VARCHAR(100) COMMENT '学院',
+    major              VARCHAR(100) COMMENT '专业',
+    class_name         VARCHAR(50)  COMMENT '班级',
+    phone              VARCHAR(20)  COMMENT '联系电话',
+    special_type       TINYINT      DEFAULT 0 COMMENT '特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾',
+    create_time        DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time        DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='学生信息表';
 
 -- 3. 教师信息表
@@ -69,6 +66,9 @@ CREATE TABLE grant_application (
     type_id         BIGINT       NOT NULL COMMENT '助学金类型ID',
     apply_reason    TEXT         NOT NULL COMMENT '申请理由',
     family_situation TEXT        COMMENT '家庭情况描述',
+    family_income   DECIMAL(10,2) COMMENT '家庭年收入(元，申请时填报)',
+    family_members  INT          COMMENT '家庭人口数(申请时填报)',
+    per_capita_income DECIMAL(10,2) COMMENT '人均年收入(元，自动计算)',
     special_type    TINYINT      DEFAULT 0 COMMENT '特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾',
     special_proof   VARCHAR(255) DEFAULT NULL COMMENT '特殊困难证明材料路径',
     status          TINYINT      NOT NULL DEFAULT 0 COMMENT '状态：0待审核，1通过，2驳回，3已评分，4已评定，5已公示',

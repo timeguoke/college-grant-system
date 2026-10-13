@@ -1,9 +1,11 @@
 package com.collegegrant.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.collegegrant.pojo.vo.GrantTypePageVO;
 import com.collegegrant.pojo.vo.GrantTypeWithLevelVO;
 import com.collegegrant.common.result.PageResult;
 import com.collegegrant.common.result.Result;
+import com.collegegrant.pojo.dto.GrantTypeDTO;
 import com.collegegrant.pojo.entity.GrantType;
 import com.collegegrant.service.GrantTypeService;
 import io.swagger.annotations.Api;
@@ -25,27 +27,34 @@ public class GrantTypeController {
     private GrantTypeService grantTypeService;
 
 
-    @GetMapping("/list")
-    @ApiOperation("助学金分页")
-    public PageResult<GrantType> pageGrantType(
+    @GetMapping("/page")
+    @ApiOperation("助学金分页（支持名称搜索，含等级数量）")
+    public PageResult<GrantTypePageVO> pageGrantType(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) Integer status) {
+            @RequestParam(required = false) Integer status,
+            @RequestParam(required = false) String name) {
 
-        log.info("助学金分页,分页信息 page={},size={},status={} ", page, size, status);
-        Page<GrantType> result = grantTypeService.list(page, size, status);
+        log.info("助学金分页,分页信息 page={},size={},status={},name={} ", page, size, status, name);
+        Page<GrantTypePageVO> result = grantTypeService.listPage(page, size, status, name);
         //总记录数
         Long total = result.getTotal();
         //数据
-        List<GrantType> records = result.getRecords();
-        return PageResult.success(total, records);
+        return PageResult.success(total, result.getRecords());
+    }
+
+    @GetMapping("/list")
+    @ApiOperation("助学金全量列表（下拉选择用）")
+    public Result<List<GrantType>> listAll(@RequestParam(required = false) Integer status) {
+        log.info("助学金全量列表 status={}", status);
+        return Result.success(grantTypeService.listAll(status));
     }
 
     @PostMapping
-    @ApiOperation("新增助学金")
-    public Result save(@RequestBody GrantType grantType) {
-        log.info("新增助学金 :grantType={}", grantType);
-        grantTypeService.insert(grantType);
+    @ApiOperation("新增助学金（含等级列表）")
+    public Result save(@RequestBody GrantTypeDTO grantTypeDTO) {
+        log.info("新增助学金 :grantType={}", grantTypeDTO);
+        grantTypeService.insertWithLevels(grantTypeDTO);
         return Result.success();
     }
 
@@ -63,20 +72,20 @@ public class GrantTypeController {
     @ApiOperation("启用禁用助学金")
     public Result updateGrantTypeStatus(@PathVariable Long id, @RequestParam Integer status) {
         log.info("启用禁用助学金 :id={},status ={}", id, status);
-        GrantType grantType = GrantType.builder()
-                .status(status)
-                .id(id)
-                .build();
-        grantTypeService.update(grantType);
+        // 仅更新状态，不传等级列表，避免影响已有等级
+        GrantTypeDTO dto = new GrantTypeDTO();
+        dto.setId(id);
+        dto.setStatus(status);
+        grantTypeService.updateWithLevels(dto);
         return Result.success();
     }
 
     @PutMapping("/{id}")
-    @ApiOperation("修改助学金信息")
-    public Result updateGrantType(@PathVariable Long id, @RequestBody GrantType grantType) {
-        log.info("修改助学金信息 :id={},GrantType ={}", id, grantType);
-        grantType.setId(id);
-        grantTypeService.update(grantType);
+    @ApiOperation("修改助学金信息（含等级列表）")
+    public Result updateGrantType(@PathVariable Long id, @RequestBody GrantTypeDTO grantTypeDTO) {
+        log.info("修改助学金信息 :id={},GrantType ={}", id, grantTypeDTO);
+        grantTypeDTO.setId(id);
+        grantTypeService.updateWithLevels(grantTypeDTO);
         return Result.success();
     }
 
@@ -100,10 +109,10 @@ public class GrantTypeController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("助学金类型详情")
+    @ApiOperation("助学金类型详情（带等级列表）")
     public Result GrantTypeDetail(@PathVariable Long id) {
         log.info("助学金类型详情 :id={} ", id);
-        GrantType grantType = grantTypeService.GrantTypeDetail(id);
+        GrantTypeWithLevelVO grantType = grantTypeService.detailWithLevels(id);
         return Result.success(grantType);
 
     }

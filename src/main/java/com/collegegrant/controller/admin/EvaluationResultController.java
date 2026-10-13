@@ -1,9 +1,11 @@
 package com.collegegrant.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.alibaba.excel.EasyExcel;
 import com.collegegrant.common.result.PageResult;
 import com.collegegrant.common.result.Result;
 import com.collegegrant.pojo.dto.EvaluateDTO;
+import com.collegegrant.pojo.dto.EvaluationExportDTO;
 import com.collegegrant.pojo.vo.EvaluateResultVO;
 import com.collegegrant.pojo.vo.EvaluationResultVO;
 import com.collegegrant.service.EvaluationResultService;
@@ -13,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
@@ -59,5 +63,23 @@ public class EvaluationResultController {
             return Result.error("评定结果不存在");
         }
         return Result.success(evaluationResultVO);
+    }
+
+    @GetMapping("/export")
+    @ApiOperation("导出评定结果Excel")
+    public void export(@RequestParam Long typeId, HttpServletResponse response) throws Exception {
+        log.info("导出评定结果 :typeId={}", typeId);
+        List<EvaluationExportDTO> data = evaluationResultService.getExportData(typeId);
+
+        // 设置响应头
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("评定结果", "UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+        // 写出Excel
+        EasyExcel.write(response.getOutputStream(), EvaluationExportDTO.class)
+                .sheet("评定结果")
+                .doWrite(data);
     }
 }

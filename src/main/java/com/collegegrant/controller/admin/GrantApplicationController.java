@@ -28,7 +28,7 @@ public class GrantApplicationController {
                                               @RequestParam(required = false) Integer status,
                                               @RequestParam(required = false) Long typeId) {
         log.info("管理员-申请列表 page={},size={},keyword={},status={},typeId={}", page, size, keyword, status, typeId);
-        Page<ApplicationVO> result = grantApplicationService.list(page, size, keyword, status, typeId);
+        Page<ApplicationVO> result = grantApplicationService.list(page, size, keyword, status, typeId, null);
         return PageResult.success(result.getTotal(), result.getRecords());
     }
 

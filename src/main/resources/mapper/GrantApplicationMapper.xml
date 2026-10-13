@@ -10,6 +10,9 @@
         <result property="typeName" column="type_name"/>
         <result property="applyReason" column="apply_reason"/>
         <result property="familySituation" column="family_situation"/>
+        <result property="familyIncome" column="family_income"/>
+        <result property="familyMembers" column="family_members"/>
+        <result property="perCapitaIncome" column="per_capita_income"/>
         <result property="specialType" column="special_type"/>
         <!-- 特殊困难证明材料路径 -->
         <result property="specialProof" column="special_proof"/>
@@ -32,6 +35,9 @@
         t.type_name,
         a.apply_reason,
         a.family_situation,
+        a.family_income,
+        a.family_members,
+        a.per_capita_income,
         a.special_type,
         a.special_proof,
         a.status,
@@ -65,6 +71,13 @@
             <if test="keyword != null and keyword != ''">
                 AND (s.student_no LIKE CONCAT('%', #{keyword}, '%')
                 OR s.name LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <!-- 特殊类型筛选：0=普通，-1=特殊困难(>0)，1+ = 指定类型 -->
+            <if test="specialType != null and specialType == 0">
+                AND (a.special_type = 0 OR a.special_type IS NULL)
+            </if>
+            <if test="specialType != null and specialType == -1">
+                AND a.special_type > 0
             </if>
         </where>
         ORDER BY a.create_time DESC
@@ -103,6 +116,9 @@
             t.type_name,
             a.apply_reason,
             a.family_situation,
+            a.family_income,
+            a.family_members,
+            a.per_capita_income,
             a.special_type,
             a.special_proof,
             a.status,
@@ -131,6 +147,9 @@
             t.type_name,
             a.apply_reason,
             a.family_situation,
+            a.family_income,
+            a.family_members,
+            a.per_capita_income,
             a.special_type,
             a.special_proof,
             a.status,

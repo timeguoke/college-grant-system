@@ -22,9 +22,10 @@ public interface EvaluationResultService {
      * @param size
      * @param typeId
      * @param keyword
+     * @param counselorId 辅导员ID（教师端按此隔离，管理员端传null查全部）
      * @return
      */
-    Page<EvaluationResultVO> list(int page, int size, Long typeId, String keyword);
+    Page<EvaluationResultVO> list(int page, int size, Long typeId, String keyword, Long counselorId);
 
     /**
      * 评定结果详情
@@ -32,6 +33,13 @@ public interface EvaluationResultService {
      * @return
      */
     EvaluationResultVO getEvalDetail(Long id);
+
+    /**
+     * 查询评定结果所属学生的辅导员ID（教师端详情越权校验用）
+     * @param id 评定结果ID
+     * @return 辅导员ID
+     */
+    Long getCounselorIdByResultId(Long id);
 
     /**
      * 导出评定结果

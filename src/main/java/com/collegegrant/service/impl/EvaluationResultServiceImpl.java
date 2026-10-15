@@ -278,9 +278,9 @@ public class EvaluationResultServiceImpl implements EvaluationResultService {
      * @return
      */
     @Override
-    public Page<EvaluationResultVO> list(int page, int size, Long typeId, String keyword) {
+    public Page<EvaluationResultVO> list(int page, int size, Long typeId, String keyword, Long counselorId) {
         Page<EvaluationResultVO> pageParam = new Page<>(page, size);
-        return evaluationResultMapper.selectResultPage(pageParam, typeId, keyword);
+        return evaluationResultMapper.selectResultPage(pageParam, typeId, keyword, counselorId);
     }
 
     /**
@@ -295,13 +295,21 @@ public class EvaluationResultServiceImpl implements EvaluationResultService {
     }
 
     /**
+     * 查询评定结果所属学生的辅导员ID（教师端详情越权校验用）
+     */
+    @Override
+    public Long getCounselorIdByResultId(Long id) {
+        return evaluationResultMapper.selectCounselorIdByResultId(id);
+    }
+
+    /**
      * 导出评定结果
      */
     @Override
     public List<EvaluationExportDTO> getExportData(Long typeId) {
         // 查询该类型所有评定结果（不分页）
         Page<EvaluationResultVO> pageParam = new Page<>(1, 10000);
-        Page<EvaluationResultVO> resultPage = evaluationResultMapper.selectResultPage(pageParam, typeId, null);
+        Page<EvaluationResultVO> resultPage = evaluationResultMapper.selectResultPage(pageParam, typeId, null, null);
 
         List<EvaluationExportDTO> exportList = new ArrayList<>();
         for (EvaluationResultVO vo : resultPage.getRecords()) {

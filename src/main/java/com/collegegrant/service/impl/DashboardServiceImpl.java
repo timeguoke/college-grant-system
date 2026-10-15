@@ -75,10 +75,7 @@ public class DashboardServiceImpl implements DashboardService {
             stats.setTypeId(type.getId());
             stats.setTypeName(type.getTypeName());
 
-            // 该类型下获助人数（evaluation_result中level_id > 0）
-            LambdaQueryWrapper<EvaluationResult> awardedW = new LambdaQueryWrapper<>();
-            awardedW.eq(EvaluationResult::getApplicationId, type.getId());
-            // 通过申请表关联type_id，这里简化：先查该type的申请ID
+            // 通过申请表关联type_id，先查该type的申请ID
             LambdaQueryWrapper<GrantApplication> appW = new LambdaQueryWrapper<>();
             appW.eq(GrantApplication::getTypeId, type.getId());
             List<GrantApplication> apps = grantApplicationMapper.selectList(appW);

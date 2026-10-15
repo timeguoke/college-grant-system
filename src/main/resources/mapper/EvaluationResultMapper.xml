@@ -53,6 +53,10 @@
                 AND (s.name LIKE CONCAT('%', #{keyword}, '%')
                      OR s.student_no LIKE CONCAT('%', #{keyword}, '%'))
             </if>
+            <!-- 教师端：只看我负责的学生 -->
+            <if test="counselorId != null">
+                AND s.counselor_id = #{counselorId}
+            </if>
         </where>
         ORDER BY er.score_rank ASC
     </select>
@@ -81,6 +85,15 @@
             INNER JOIN grant_type gt        ON ga.type_id = gt.id
             LEFT JOIN grant_level gl        ON er.level_id = gl.id
             LEFT JOIN score_record sr       ON er.application_id = sr.application_id
+        WHERE er.id = #{id}
+    </select>
+
+    <!-- 查询评定结果所属学生的辅导员ID（教师端详情越权校验用） -->
+    <select id="selectCounselorIdByResultId" resultType="java.lang.Long">
+        SELECT s.counselor_id
+        FROM evaluation_result er
+            INNER JOIN grant_application ga ON er.application_id = ga.id
+            INNER JOIN student s            ON ga.student_id = s.id
         WHERE er.id = #{id}
     </select>
 

@@ -45,7 +45,7 @@ public class EvaluationResultController {
                                           @RequestParam(required = false) Long typeId,
                                           @RequestParam(required = false) String keyword) {
         log.info("评定结果列表（分页）page={},size={},typeId={},keyword={} ", page, size, typeId, keyword);
-        Page<EvaluationResultVO> result = evaluationResultService.list(page, size, typeId, keyword);
+        Page<EvaluationResultVO> result = evaluationResultService.list(page, size, typeId, keyword, null);
         //总记录数
         Long total = result.getTotal();
         //数据

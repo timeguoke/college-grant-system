@@ -72,8 +72,10 @@ public class ScoreRecordController {
                                                       @RequestParam(defaultValue = "10") int size,
                                                       @RequestParam(required = false) String keyword,
                                                       @RequestParam(required = false) Long typeId) {
-        log.info("待评分申请列表page={},size={},keyword={},typeId={}", page, size, keyword, typeId);
-        Page<ApplicationVO> result = scoreRecordService.listPendingApply(page, size, keyword, typeId);
+        // 从JWT token获取当前教师ID
+        Long counselorId = UserContext.getUserId();
+        log.info("待评分申请列表page={},size={},keyword={},typeId={},counselorId={}", page, size, keyword, typeId, counselorId);
+        Page<ApplicationVO> result = scoreRecordService.listPendingApply(page, size, keyword, typeId, counselorId);
         long total = result.getTotal();
         List<ApplicationVO> records = result.getRecords();
         return PageResult.success(total, records);

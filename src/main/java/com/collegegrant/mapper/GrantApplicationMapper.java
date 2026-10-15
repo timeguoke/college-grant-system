@@ -33,7 +33,8 @@ public interface GrantApplicationMapper extends BaseMapper<GrantApplication> {
                                    @Param("status") Integer status,
                                    @Param("typeId") Long typeId,
                                    @Param("keyword") String keyword,
-                                   @Param("specialType") Integer specialType);
+                                   @Param("specialType") Integer specialType,
+                                   @Param("counselorId") Long counselorId);
 
     /**
      * 根据ID查询申请详情（联查助学金类型、审核人、学生信息）
@@ -54,5 +55,6 @@ public interface GrantApplicationMapper extends BaseMapper<GrantApplication> {
      */
     Page<ApplicationVO> selectPendingScorePage(Page<ApplicationVO> page,
                                                 @Param("keyword") String keyword,
-                                                @Param("typeId") Long typeId);
+                                                @Param("typeId") Long typeId,
+                                                @Param("counselorId") Long counselorId);
 }

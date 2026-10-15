@@ -1,6 +1,7 @@
 package com.collegegrant.controller.teacher;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.collegegrant.common.context.UserContext;
 import com.collegegrant.common.result.PageResult;
 import com.collegegrant.common.result.Result;
 import com.collegegrant.pojo.vo.ApplicationVO;
@@ -32,8 +33,11 @@ public class GrantApplicationController {
                                               @RequestParam(required = false) Integer status,
                                               @RequestParam(required = false) Long typeId,
                                               @RequestParam(required = false) Integer specialType) {
-        log.info("申请列表分页,分页信息 page={},size={},keyword={},status={},typeId={},specialType={}", page, size, keyword, status, typeId, specialType);
-        Page<ApplicationVO> result = grantApplicationService.list(page, size, keyword, status, typeId, specialType);
+        // 从JWT token获取当前教师ID
+        Long counselorId = UserContext.getUserId();
+        log.info("申请列表分页,分页信息 page={},size={},keyword={},status={},typeId={},specialType={},counselorId={}",
+                page, size, keyword, status, typeId, specialType, counselorId);
+        Page<ApplicationVO> result = grantApplicationService.list(page, size, keyword, status, typeId, specialType, counselorId);
         //总记录数
         Long total = result.getTotal();
         //数据

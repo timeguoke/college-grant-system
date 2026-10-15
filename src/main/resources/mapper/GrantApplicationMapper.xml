@@ -24,6 +24,8 @@
         <result property="studentId" column="student_id"/>
         <result property="studentNo" column="student_no"/>
         <result property="studentName" column="student_name"/>
+        <result property="college" column="college"/>
+        <result property="className" column="class_name"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
@@ -48,6 +50,8 @@
         a.student_id,
         s.student_no,
         s.name AS student_name,
+        s.college,
+        s.class_name,
         a.create_time,
         a.update_time
         FROM grant_application a
@@ -79,6 +83,10 @@
             <if test="specialType != null and specialType == -1">
                 AND a.special_type > 0
             </if>
+            <!-- 教师端：只看我负责的学生 -->
+            <if test="counselorId != null">
+                AND s.counselor_id = #{counselorId}
+            </if>
         </where>
         ORDER BY a.create_time DESC
     </select>
@@ -98,6 +106,8 @@
             a.student_id,
             s.student_no,
             s.name AS student_name,
+            s.college,
+            s.class_name,
             a.create_time,
             a.update_time
         FROM grant_application a
@@ -129,6 +139,8 @@
             a.student_id,
             s.student_no,
             s.name AS student_name,
+            s.college,
+            s.class_name,
             a.create_time,
             a.update_time
         FROM grant_application a
@@ -160,6 +172,8 @@
             a.student_id,
             s.student_no,
             s.name AS student_name,
+            s.college,
+            s.class_name,
             a.create_time,
             a.update_time
         FROM grant_application a
@@ -176,6 +190,10 @@
             </if>
             <if test="typeId != null">
                 AND a.type_id = #{typeId}
+            </if>
+            <!-- 教师端：只看我负责的学生 -->
+            <if test="counselorId != null">
+                AND s.counselor_id = #{counselorId}
             </if>
         ORDER BY a.create_time DESC
     </select>

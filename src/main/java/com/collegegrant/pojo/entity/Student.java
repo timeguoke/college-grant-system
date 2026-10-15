@@ -36,6 +36,8 @@ public class Student {
     private String phone;
     /** 特殊困难类型：0无，1建档立卡，2低保家庭，3孤儿，4残疾 */
     private Integer specialType;
+    /** 辅导员ID（关联teacher表） */
+    private Long counselorId;
     /** 创建时间 */
     private LocalDateTime createTime;
     /** 更新时间 */

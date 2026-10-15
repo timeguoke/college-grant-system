@@ -230,11 +230,11 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
      * @return
      */
     @Override
-    public Page<ApplicationVO> listPendingApply(int page, int size, String keyword, Long typeId) {
+    public Page<ApplicationVO> listPendingApply(int page, int size, String keyword, Long typeId, Long counselorId) {
         //页码信息
         Page<ApplicationVO> pageParam = new Page<>(page, size);
 
-        Page<ApplicationVO> voPage = grantApplicationMapper.selectPendingScorePage(pageParam, keyword, typeId);
+        Page<ApplicationVO> voPage = grantApplicationMapper.selectPendingScorePage(pageParam, keyword, typeId, counselorId);
 
         //填充状态码文字
         for (ApplicationVO VO : voPage.getRecords()) {

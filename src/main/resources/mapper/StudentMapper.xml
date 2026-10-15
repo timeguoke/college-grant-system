@@ -2,6 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.collegegrant.mapper.StudentMapper">
 
+    <!-- 教师端"我的学生"分页列表：按学生聚合，统计申请次数，取最新一条申请的状态 -->
+    <select id="selectTeacherStudentPage" resultType="com.collegegrant.pojo.vo.TeacherStudentVO">
+        SELECT
+            s.id,
+            s.student_no AS studentNo,
+            s.name,
+            s.gender,
+            s.college,
+            s.major,
+            s.class_name AS className,
+            s.special_type AS specialType,
+            COUNT(a.id) AS applyCount,
+            (SELECT a2.status FROM grant_application a2
+             WHERE a2.student_id = s.id
+             ORDER BY a2.create_time DESC, a2.id DESC LIMIT 1) AS latestStatus
+        FROM student s
+        LEFT JOIN grant_application a ON a.student_id = s.id
+        <where>
+            <!-- 教师端：只看我负责的学生 -->
+            <if test="counselorId != null">
+                AND s.counselor_id = #{counselorId}
+            </if>
+            <!-- 关键词搜索：学号或姓名模糊匹配 -->
+            <if test="keyword != null and keyword != ''">
+                AND (s.student_no LIKE CONCAT('%', #{keyword}, '%')
+                     OR s.name LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        GROUP BY s.id, s.student_no, s.name, s.gender, s.college, s.major, s.class_name, s.special_type
+        ORDER BY s.student_no
+    </select>
 
 </mapper>
-

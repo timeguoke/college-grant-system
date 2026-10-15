@@ -74,6 +74,12 @@ public class ApplicationVO {
     /** 学生姓名 */
     private String studentName;
 
+    /** 学院 */
+    private String college;
+
+    /** 班级 */
+    private String className;
+
     /** 创建时间 */
     private LocalDateTime createTime;
 

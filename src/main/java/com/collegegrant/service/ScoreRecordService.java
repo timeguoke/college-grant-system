@@ -49,5 +49,5 @@ public interface ScoreRecordService {
      * @param typeId
      * @return
      */
-    Page<ApplicationVO> listPendingApply(int page, int size, String keyword, Long typeId);
+    Page<ApplicationVO> listPendingApply(int page, int size, String keyword, Long typeId, Long counselorId);
 }

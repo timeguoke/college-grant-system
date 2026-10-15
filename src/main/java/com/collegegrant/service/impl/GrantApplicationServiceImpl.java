@@ -101,7 +101,7 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
         Long studentId = UserContext.getUserId();
         Page<ApplicationVO> pageParam = new Page<>(page, size);
 
-        Page<ApplicationVO> voPage = grantApplicationMapper.selectApplicationPage(pageParam, studentId, null, null, null, null);
+        Page<ApplicationVO> voPage = grantApplicationMapper.selectApplicationPage(pageParam, studentId, null, null, null, null, null);
         //填充状态码文字
         for (ApplicationVO VO : voPage.getRecords()) {
             VO.setStatusText(getStatusText(VO.getStatus()));
@@ -175,12 +175,12 @@ public class GrantApplicationServiceImpl implements GrantApplicationService {
      * @return
      */
     @Override
-    public Page<ApplicationVO> list(int page, int size, String keyword, Integer status, Long typeId, Integer specialType) {
+    public Page<ApplicationVO> list(int page, int size, String keyword, Integer status, Long typeId, Integer specialType, Long counselorId) {
 
         Page<ApplicationVO> pageParam = new Page<>(page, size);
 
         Page<ApplicationVO> voPage = grantApplicationMapper
-                .selectApplicationPage(pageParam, null, status, typeId, keyword, specialType);
+                .selectApplicationPage(pageParam, null, status, typeId, keyword, specialType, counselorId);
         //填充状态码文字
         for (ApplicationVO VO : voPage.getRecords()) {
             VO.setStatusText(getStatusText(VO.getStatus()));
